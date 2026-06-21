@@ -112,7 +112,7 @@ st.markdown("""
 # ─────────────────────────────────────────────────────────────────────
 # LOAD MODELS & LOOKUPS  (cached)
 # ─────────────────────────────────────────────────────────────────────
-MODEL_DIR = r"D:/Users/DELL 3576/Darshan/Flipkart-hackathon/phase4_app/models"
+MODEL_DIR = r"/models"
 
 @st.cache_resource
 def load_models():
