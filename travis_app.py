@@ -11,6 +11,7 @@ import pandas as pd
 import numpy as np
 import json
 import joblib
+import math
 import requests
 import streamlit.components.v1 as components
 from datetime import datetime, date, time
@@ -408,6 +409,75 @@ def build_route_coords(route_data, clat, clon):
         "primary":   pts[0],
         "alternate":  pts[1] if len(pts) > 1 else synthetic()["alternate"],
         "alternate2": pts[2] if len(pts) > 2 else [],
+    }
+
+
+def extract_route_stats(route_data, route_coords):
+    """Return a stats dict for the ETA comparison card.
+
+    Uses real Mappls API duration/distance when available; falls back to
+    computing distance from polyline geometry at a typical urban speed.
+    """
+    URBAN_KMH = 25  # km/h — conservative Bangalore urban speed
+
+    def _haversine(lat1, lon1, lat2, lon2):
+        p = math.pi / 180
+        a = (0.5 - math.cos((lat2 - lat1) * p) / 2
+             + math.cos(lat1 * p) * math.cos(lat2 * p)
+             * (1 - math.cos((lon2 - lon1) * p)) / 2)
+        return 2 * 6371 * math.asin(math.sqrt(a))
+
+    def _path_km(pts):
+        if not pts or len(pts) < 2:
+            return 0.0
+        return round(
+            sum(_haversine(pts[i-1]["lat"], pts[i-1]["lng"],
+                           pts[i]["lat"],   pts[i]["lng"])
+                for i in range(1, len(pts))), 2)
+
+    source = "estimated"
+    p_dur_s = p_dist_m = a_dur_s = a_dist_m = 0
+
+    if route_data:
+        # Format 1 — {results: {trips: [{duration, length, polyline}, ...]}}
+        trips = route_data.get("results", {}).get("trips", [])
+        if trips and trips[0].get("duration", 0) > 0:
+            p = trips[0]
+            a = trips[1] if len(trips) > 1 else {}
+            p_dur_s, p_dist_m = p.get("duration", 0), p.get("length", 0)
+            a_dur_s, a_dist_m = a.get("duration", 0), a.get("length", 0)
+            source = "api"
+        else:
+            # Format 2 — {routes: [{duration, distance, geometry}, ...]}
+            routes = route_data.get("routes", [])
+            if routes and routes[0].get("duration", 0) > 0:
+                p = routes[0]
+                a = routes[1] if len(routes) > 1 else {}
+                p_dur_s, p_dist_m = p.get("duration", 0), p.get("distance", 0)
+                a_dur_s, a_dist_m = a.get("duration", 0), a.get("distance", 0)
+                source = "api"
+
+    if source == "estimated":
+        p_km     = _path_km(route_coords.get("primary", []))
+        a_km     = _path_km(route_coords.get("alternate", []))
+        p_dist_m = p_km * 1000
+        a_dist_m = a_km * 1000
+        p_dur_s  = (p_km / URBAN_KMH) * 3600
+        a_dur_s  = (a_km / URBAN_KMH) * 3600
+
+    p_min = max(1, round(p_dur_s / 60))
+    a_min = max(1, round(a_dur_s / 60))
+    p_km  = round(p_dist_m / 1000, 1)
+    a_km  = round(a_dist_m / 1000, 1)
+
+    return {
+        "primary_min": p_min,
+        "primary_km":  p_km,
+        "divert_min":  a_min,
+        "divert_km":   a_km,
+        "delta_min":   max(0, a_min - p_min),
+        "delta_km":    round(max(0.0, a_km - p_km), 1),
+        "source":      source,
     }
 
 
@@ -1014,9 +1084,17 @@ else:
          "lon": PS_COORDS[ps["name"]]["lon"], "dist": ps["distance_km"]}
         for ps in nearest_ps if ps["name"] in PS_COORDS
     ]
-    route_data   = get_route_data(token, round(clat - 0.027, 6), clon,
-                                  round(clat + 0.027, 6), clon)
+    # Route: nearest police station → incident location.
+    # Semantics: "time for nearest unit to reach the blocked junction" —
+    # changes meaningfully per corridor and gives the diversion real context.
+    if ps_markers:
+        ps0 = ps_markers[0]
+        r_orig_lat, r_orig_lon = ps0["lat"], ps0["lon"]
+    else:
+        r_orig_lat, r_orig_lon = round(clat - 0.027, 6), clon
+    route_data   = get_route_data(token, r_orig_lat, r_orig_lon, clat, clon)
     route_coords = build_route_coords(route_data, clat, clon)
+    route_stats  = extract_route_stats(route_data, route_coords)
 
     col_deploy, col_map = st.columns([1, 1.6])
 
@@ -1135,6 +1213,67 @@ else:
             ps_markers=ps_markers,
         )
         components.html(map_html, height=440, scrolling=False)
+
+        # ── ETA / Diversion comparison card (Integration 2 — Route API) ──
+        rs = route_stats
+        if rs["divert_min"] > 0:
+            # Operational verdict
+            if rs["delta_min"] <= 5:
+                verdict_color, verdict_icon, verdict_text = (
+                    "#00d4aa", "✅", "Minimal overhead — viable rerouting")
+            elif rs["delta_min"] <= 15:
+                verdict_color, verdict_icon, verdict_text = (
+                    "#ffd166", "⚠️", "Moderate detour — advise early diversion")
+            else:
+                verdict_color, verdict_icon, verdict_text = (
+                    "#ff6b6b", "🚨", "Major detour — coordinate BMTC & VMS boards")
+
+            ps_origin_name = ps_markers[0]["name"] if ps_markers else "nearest PS"
+            src_note = (
+                f'<span style="color:#555;font-size:10px;">'
+                f'{ps_origin_name} → incident · Mappls API</span>'
+                if rs["source"] == "api" else
+                f'<span style="color:#555;font-size:10px;">'
+                f'{ps_origin_name} → incident · estimated</span>'
+            )
+            delta_str = (
+                f'+{rs["delta_min"]} min · +{rs["delta_km"]} km'
+                if rs["delta_km"] > 0
+                else f'+{rs["delta_min"]} min'
+            )
+
+            _eta_html = (
+                f'<div class="travis-card" style="border-color:{tc}33;margin-top:0;padding:16px 20px;">'
+                f'<div class="section-title">🚔 Police Response — ETA to Incident</div>'
+                f'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">'
+                f'<div style="background:#0f1117;border:1px solid #ff444440;border-radius:8px;padding:11px 14px;">'
+                f'<div style="font-size:9px;color:#ff4444;letter-spacing:0.07em;margin-bottom:3px;">DIRECT ROUTE (BLOCKED)</div>'
+                f'<div style="display:flex;align-items:baseline;gap:4px;">'
+                f'<span style="font-size:26px;font-weight:800;color:#ff4444;line-height:1;">{rs["primary_min"]}</span>'
+                f'<span style="font-size:12px;color:#8b8fa8;"> min</span>'
+                f'</div>'
+                f'<div style="font-size:11px;color:#8b8fa8;margin-top:2px;">{rs["primary_km"]} km</div>'
+                f'</div>'
+                f'<div style="background:#0f1117;border:1px solid #00d4aa40;border-radius:8px;padding:11px 14px;">'
+                f'<div style="font-size:9px;color:#00d4aa;letter-spacing:0.07em;margin-bottom:3px;">VIA DIVERSION</div>'
+                f'<div style="display:flex;align-items:baseline;gap:4px;">'
+                f'<span style="font-size:26px;font-weight:800;color:#00d4aa;line-height:1;">{rs["divert_min"]}</span>'
+                f'<span style="font-size:12px;color:#8b8fa8;"> min</span>'
+                f'</div>'
+                f'<div style="font-size:11px;color:#8b8fa8;margin-top:2px;">{rs["divert_km"]} km</div>'
+                f'</div>'
+                f'</div>'
+                f'<div style="background:#0f1117;border:1px solid {verdict_color}33;border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:10px;">'
+                f'<div style="font-size:20px;line-height:1;">{verdict_icon}</div>'
+                f'<div style="flex:1;">'
+                f'<div style="font-size:13px;font-weight:700;color:{verdict_color};">Detour: {delta_str}</div>'
+                f'<div style="font-size:11px;color:#8b8fa8;margin-top:2px;">{verdict_text}</div>'
+                f'</div>'
+                f'<div style="text-align:right;">{src_note}</div>'
+                f'</div>'
+                f'</div>'
+            )
+            st.markdown(_eta_html, unsafe_allow_html=True)
 
         # Pin provenance (Integration 3)
         if cur_junction and "geocoded" in pin_source:
