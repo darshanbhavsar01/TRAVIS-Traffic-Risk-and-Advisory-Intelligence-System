@@ -112,7 +112,7 @@ st.markdown("""
 # ─────────────────────────────────────────────────────────────────────
 # LOAD MODELS & LOOKUPS  (cached)
 # ─────────────────────────────────────────────────────────────────────
-MODEL_DIR = r"/models"
+MODEL_DIR = "/models"
 
 @st.cache_resource
 def load_models():
