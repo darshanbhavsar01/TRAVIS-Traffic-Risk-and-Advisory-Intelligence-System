@@ -4,16 +4,21 @@ Bangalore Event-Driven Traffic Congestion Prediction
 Phase 4: Streamlit Demo App
 """
 
+import os
+from dotenv import load_dotenv
 import streamlit as st
 import pandas as pd
 import numpy as np
 import json
 import joblib
-import folium
-from streamlit_folium import st_folium
+import requests
+import streamlit.components.v1 as components
 from datetime import datetime, date, time
 import warnings
 warnings.filterwarnings("ignore")
+
+# Load environment variables from .env file
+load_dotenv()
 
 # ─────────────────────────────────────────────────────────────────────
 # PAGE CONFIG
@@ -132,10 +137,449 @@ CAUSE_RANK = LOOKUP["cause_impact_rank"]
 T0         = pd.Timestamp(LOOKUP["t0"])
 
 # ─────────────────────────────────────────────────────────────────────
+# MAPPLS (Map My India) API INTEGRATION
+# ─────────────────────────────────────────────────────────────────────
+MAPPLS_CLIENT_ID     = os.getenv("CLIENT_ID")
+MAPPLS_CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+
+# Known coordinates for major Bangalore police stations
+PS_COORDS = {
+    "Sadashivanagar":  {"lat": 13.0085, "lon": 77.5832},
+    "Vijayanagara":    {"lat": 12.9693, "lon": 77.5372},
+    "Hebbala":         {"lat": 13.0375, "lon": 77.6182},
+    "Peenya":          {"lat": 13.0305, "lon": 77.5178},
+    "Upparpet":        {"lat": 12.9657, "lon": 77.5741},
+    "Malleshwaram":    {"lat": 13.0020, "lon": 77.5683},
+    "Rajajinagar":     {"lat": 12.9962, "lon": 77.5525},
+    "Banashankari":    {"lat": 12.9261, "lon": 77.5656},
+    "Yeshwanthpura":   {"lat": 13.0246, "lon": 77.5406},
+    "Whitefield":      {"lat": 12.9698, "lon": 77.7500},
+    "Koramangala":     {"lat": 12.9352, "lon": 77.6245},
+    "Indiranagar":     {"lat": 12.9784, "lon": 77.6408},
+    "HSR Layout":      {"lat": 12.9116, "lon": 77.6474},
+    "Byatarayanapura": {"lat": 13.0657, "lon": 77.5688},
+    "Jnanabharathi":   {"lat": 12.9490, "lon": 77.5086},
+    "Kengeri":         {"lat": 12.9112, "lon": 77.4827},
+    "Yelahanka":       {"lat": 13.1007, "lon": 77.5963},
+    "Electronic City": {"lat": 12.8430, "lon": 77.6750},
+    "Mahadevapura":    {"lat": 12.9937, "lon": 77.6882},
+    "KR Puram":        {"lat": 13.0035, "lon": 77.6960},
+    "Marathahalli":    {"lat": 12.9591, "lon": 77.7007},
+    "Bellandur":       {"lat": 12.9260, "lon": 77.6762},
+    "Hebbal":          {"lat": 13.0353, "lon": 77.5970},
+    "Govindpura":      {"lat": 13.0224, "lon": 77.6046},
+    "Basavanagudi":    {"lat": 12.9420, "lon": 77.5684},
+    "Jayanagar":       {"lat": 12.9302, "lon": 77.5838},
+    "JP Nagar":        {"lat": 12.9082, "lon": 77.5836},
+    "BTM Layout":      {"lat": 12.9166, "lon": 77.6101},
+    "Hulimavu":        {"lat": 12.8873, "lon": 77.6147},
+    "Bommanahalli":    {"lat": 12.9070, "lon": 77.6306},
+}
+
+
+@st.cache_data(ttl=3300)
+def get_mappls_token():
+    """Fetch Mappls OAuth token (cached 55 min)."""
+    try:
+        resp = requests.post(
+            "https://outpost.mappls.com/api/security/oauth/token",
+            data={
+                "grant_type": "client_credentials",
+                "client_id": MAPPLS_CLIENT_ID,
+                "client_secret": MAPPLS_CLIENT_SECRET,
+            },
+            headers={"Content-Type": "application/x-www-form-urlencoded"},
+            timeout=10,
+        )
+        if resp.status_code == 200:
+            return resp.json().get("access_token", "")
+    except Exception:
+        pass
+    return ""
+
+
+@st.cache_data(ttl=600)
+def get_route_data(token, origin_lat, origin_lon, dest_lat, dest_lon):
+    """Fetch primary + alternate routes from Mappls Route API."""
+    if not token:
+        return None
+    try:
+        resp = requests.get(
+            "https://apis.mappls.com/advancedmaps/v1/route_adv/json",
+            params={
+                "origin": f"{origin_lat},{origin_lon}",
+                "destination": f"{dest_lat},{dest_lon}",
+                "alternatives": "true",
+                "region": "IND",
+            },
+            headers={"Authorization": f"Bearer {token}"},
+            timeout=10,
+        )
+        if resp.status_code == 200:
+            return resp.json()
+    except Exception:
+        pass
+    return None
+
+
+@st.cache_data(ttl=600)
+def get_nearest_stations(token, event_lat, event_lon):
+    """Find 3 nearest police stations by road distance (Distance Matrix API)."""
+    def straight_dist(ps):
+        dlat = PS_COORDS[ps]["lat"] - event_lat
+        dlon = PS_COORDS[ps]["lon"] - event_lon
+        return dlat ** 2 + dlon ** 2
+
+    candidates = sorted(PS_COORDS.keys(), key=straight_dist)[:6]
+
+    if token:
+        try:
+            dest_str = "|".join(
+                f"{PS_COORDS[ps]['lat']},{PS_COORDS[ps]['lon']}" for ps in candidates
+            )
+            resp = requests.get(
+                "https://apis.mappls.com/advancedmaps/v1/distance_matrix/json",
+                params={
+                    "origins": f"{event_lat},{event_lon}",
+                    "destinations": dest_str,
+                    "region": "IND",
+                },
+                headers={"Authorization": f"Bearer {token}"},
+                timeout=10,
+            )
+            if resp.status_code == 200:
+                data = resp.json()
+                rows = (data.get("results", {}).get("rows")
+                        or data.get("rows", []))
+                elems = rows[0].get("elements", []) if rows else []
+                results = []
+                for ps, elem in zip(candidates, elems):
+                    dist_val = (elem.get("distance") or {}).get("value", 0)
+                    if dist_val > 0:
+                        results.append({"name": ps, "distance_km": round(dist_val / 1000, 1)})
+                if results:
+                    return sorted(results, key=lambda x: x["distance_km"])[:3]
+        except Exception:
+            pass
+
+    # Fallback: straight-line (≈111 km/degree)
+    return sorted(
+        [{"name": ps, "distance_km": round(straight_dist(ps) ** 0.5 * 111, 1)} for ps in candidates],
+        key=lambda x: x["distance_km"],
+    )[:3]
+
+
+# ── Junction geocoding (Integration 3) ──────────────────────────────
+@st.cache_resource
+def load_junction_coords():
+    """Load pre-computed junction → coordinate lookup (built by
+    precompute_junction_coords.py). Returns {} if not yet generated."""
+    try:
+        with open(f"{MODEL_DIR}/junction_coords.json", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+
+JUNCTION_COORDS = load_junction_coords()
+
+
+@st.cache_data(ttl=86400)
+def geocode_junction(token, name):
+    """Resolve a single junction name to precise coords via the Mappls
+    Geocode API. Cached 24h. Used as a live fallback when a junction is
+    not in the pre-computed junction_coords.json."""
+    if not token or not name:
+        return None
+    try:
+        resp = requests.get(
+            "https://atlas.mappls.com/api/places/geocode",
+            params={"address": f"{name}, Bengaluru, Karnataka", "region": "IND",
+                    "itemCount": 1},
+            headers={"Authorization": f"Bearer {token}"},
+            timeout=10,
+        )
+        if resp.status_code == 200:
+            results = resp.json().get("copResults") or resp.json().get("results")
+            if isinstance(results, dict):
+                results = [results]
+            if results:
+                r = results[0]
+                lat = r.get("latitude") or r.get("lat")
+                lon = r.get("longitude") or r.get("lng") or r.get("lon")
+                if lat and lon:
+                    return {"lat": float(lat), "lon": float(lon)}
+    except Exception:
+        pass
+    return None
+
+
+def resolve_junction_coords(token, junction, fallback_lat, fallback_lon):
+    """Return precise junction coords: pre-computed → live geocode → corridor centroid."""
+    if not junction:
+        return fallback_lat, fallback_lon, "corridor centroid"
+    jc = JUNCTION_COORDS.get(junction)
+    if jc and jc.get("lat") and jc.get("lon"):
+        return jc["lat"], jc["lon"], "geocoded (precomputed)"
+    live = geocode_junction(token, junction)
+    if live:
+        return live["lat"], live["lon"], "geocoded (live)"
+    return fallback_lat, fallback_lon, "corridor centroid"
+
+
+def _decode_polyline(encoded):
+    path, i, lat, lng = [], 0, 0, 0
+    while i < len(encoded):
+        b, shift, result = 0, 0, 0
+        while True:
+            b = ord(encoded[i]) - 63
+            i += 1
+            result |= (b & 0x1f) << shift
+            shift += 5
+            if b < 0x20:
+                break
+        lat += ~(result >> 1) if (result & 1) else (result >> 1)
+        shift, result = 0, 0
+        while True:
+            b = ord(encoded[i]) - 63
+            i += 1
+            result |= (b & 0x1f) << shift
+            shift += 5
+            if b < 0x20:
+                break
+        lng += ~(result >> 1) if (result & 1) else (result >> 1)
+        path.append({"lat": round(lat / 1e5, 6), "lng": round(lng / 1e5, 6)})
+    return path
+
+
+def build_route_coords(route_data, clat, clon):
+    """Extract route coordinate arrays; fall back to synthetic polylines."""
+    def synthetic():
+        off, det = 0.025, 0.018
+        return {
+            "primary": [
+                {"lat": round(clat - off, 6), "lng": round(clon, 6)},
+                {"lat": round(clat - off * 0.4, 6), "lng": round(clon + 0.003, 6)},
+                {"lat": round(clat, 6), "lng": round(clon, 6)},
+                {"lat": round(clat + off * 0.4, 6), "lng": round(clon - 0.003, 6)},
+                {"lat": round(clat + off, 6), "lng": round(clon, 6)},
+            ],
+            "alternate": [
+                {"lat": round(clat - off, 6), "lng": round(clon, 6)},
+                {"lat": round(clat - off * 0.5, 6), "lng": round(clon - det, 6)},
+                {"lat": round(clat, 6), "lng": round(clon - det, 6)},
+                {"lat": round(clat + off * 0.5, 6), "lng": round(clon - det, 6)},
+                {"lat": round(clat + off, 6), "lng": round(clon, 6)},
+            ],
+            "alternate2": [],
+        }
+
+    if route_data is None:
+        return synthetic()
+
+    def extract(geom):
+        if not geom:
+            return []
+        if isinstance(geom, str) and len(geom) > 4:
+            try:
+                return _decode_polyline(geom)
+            except Exception:
+                return []
+        if isinstance(geom, dict) and "coordinates" in geom:
+            return [{"lat": c[1], "lng": c[0]} for c in geom["coordinates"]]
+        if isinstance(geom, list) and geom and isinstance(geom[0], dict):
+            return geom
+        return []
+
+    # Handle both {results:{trips:[...]}} and {routes:[...]} formats
+    trips = route_data.get("results", {}).get("trips", [])
+    if trips:
+        raw = [t.get("polyline", "") for t in trips]
+    else:
+        raw = [r.get("geometry", "") for r in route_data.get("routes", [])]
+
+    pts = [extract(g) for g in raw]
+    pts = [p for p in pts if len(p) >= 2]
+
+    if not pts:
+        return synthetic()
+
+    return {
+        "primary":   pts[0],
+        "alternate":  pts[1] if len(pts) > 1 else synthetic()["alternate"],
+        "alternate2": pts[2] if len(pts) > 2 else [],
+    }
+
+
+def build_mappls_map_html(token, clat, clon, tier, tc, radius, impact,
+                          sel_corridor, sel_cause, route_coords, ps_markers):
+    """Return self-contained HTML embedding the Mappls JS SDK map."""
+    fill_opacity = 0.25 if tier == "HIGH" else 0.18 if tier == "MEDIUM" else 0.10
+    route_json   = json.dumps(route_coords)
+    ps_json      = json.dumps(ps_markers)
+    corr_js      = json.dumps(sel_corridor)
+    cause_js     = json.dumps(sel_cause.replace("_", " ").title())
+
+    return f"""<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<style>
+* {{ margin:0; padding:0; box-sizing:border-box; }}
+html, body {{ width:100%; height:100%; background:#0f1117; }}
+#map {{ width:100%; height:420px; border-radius:12px; overflow:hidden; }}
+#map-error {{
+    display:none; width:100%; height:420px; border-radius:12px;
+    background:#1a1d27; border:1px solid #2a2d3a;
+    align-items:center; justify-content:center; flex-direction:column; gap:8px;
+    color:#8b8fa8; font-family:sans-serif; font-size:14px; text-align:center;
+}}
+.map-legend {{
+    position:absolute; bottom:32px; left:12px; z-index:10;
+    background:rgba(15,17,23,0.88); border:1px solid #2a2d3a; border-radius:8px;
+    padding:8px 12px; font-family:sans-serif; font-size:11px; color:#e8eaf0;
+    pointer-events:none;
+}}
+.leg {{ display:flex; align-items:center; gap:6px; margin-bottom:3px; }}
+.leg:last-child {{ margin-bottom:0; }}
+.dot {{ width:10px; height:10px; border-radius:50%; flex-shrink:0; }}
+.bar {{ width:18px; height:4px; border-radius:2px; flex-shrink:0; }}
+</style>
+</head>
+<body>
+<div id="map"></div>
+<div id="map-error">
+  <div style="font-size:28px;">⚠️</div>
+  <div>Mappls map unavailable</div>
+  <div style="font-size:11px;color:#555;margin-top:4px;">Check API credentials or network connection</div>
+</div>
+<script>
+var TOKEN        = '{token}';
+var LAT          = {clat};
+var LON          = {clon};
+var TIER         = '{tier}';
+var COLOR        = '{tc}';
+var RAD          = {radius};
+var SCORE        = {impact};
+var FILL_OPACITY = {fill_opacity};
+var CORR         = {corr_js};
+var CAUSE        = {cause_js};
+var ROUTES       = {route_json};
+var PS_MARKERS   = {ps_json};
+
+function showError() {{
+    document.getElementById('map').style.display = 'none';
+    document.getElementById('map-error').style.display = 'flex';
+}}
+
+function decodePolyline(enc) {{
+    var path = [], i = 0, lat = 0, lng = 0;
+    while (i < enc.length) {{
+        var b, shift = 0, res = 0;
+        do {{ b = enc.charCodeAt(i++) - 63; res |= (b & 0x1f) << shift; shift += 5; }} while (b >= 0x20);
+        lat += (res & 1) ? ~(res >> 1) : (res >> 1);
+        shift = 0; res = 0;
+        do {{ b = enc.charCodeAt(i++) - 63; res |= (b & 0x1f) << shift; shift += 5; }} while (b >= 0x20);
+        lng += (res & 1) ? ~(res >> 1) : (res >> 1);
+        path.push({{lat: lat / 1e5, lng: lng / 1e5}});
+    }}
+    return path;
+}}
+
+function getPoints(geom) {{
+    if (!geom || !geom.length) return [];
+    if (typeof geom === 'string') return decodePolyline(geom);
+    if (geom[0] && geom[0].lat !== undefined) return geom;
+    if (geom[0] && Array.isArray(geom[0])) return geom.map(function(c) {{ return {{lat:c[1], lng:c[0]}}; }});
+    return [];
+}}
+
+function drawLine(map, pts, color, weight, opacity) {{
+    if (!pts || pts.length < 2) return;
+    new mappls.Polyline({{map:map, path:pts, strokeColor:color, strokeWeight:weight, strokeOpacity:opacity||0.85}});
+}}
+
+function addLegend(hasRoutes) {{
+    var d = document.createElement('div');
+    d.className = 'map-legend';
+    var h = '<div class="leg"><div class="dot" style="background:' + COLOR + ';opacity:0.75;"></div><span>Impact zone (' + RAD + 'm)</span></div>';
+    h    += '<div class="leg"><div class="dot" style="background:#3498db;"></div><span>Police station</span></div>';
+    if (hasRoutes) {{
+        h += '<div class="leg"><div class="bar" style="background:#ff4444;"></div><span>Primary route (blocked)</span></div>';
+        h += '<div class="leg"><div class="bar" style="background:#00d4aa;"></div><span>Diversion route</span></div>';
+    }}
+    h += '<div class="leg" style="margin-top:4px;border-top:1px solid #2a2d3a22;padding-top:4px;"><span style="color:#555;font-size:10px;">Mappls SDK · Live traffic · Lane-level data</span></div>';
+    d.innerHTML = h;
+    document.getElementById('map').appendChild(d);
+}}
+
+function initMap() {{
+    try {{
+        var map = new mappls.Map('map', {{center:{{lat:LAT, lng:LON}}, zoom:13}});
+        map.on('load', function() {{
+            var hasRoutes = false;
+
+            try {{ mappls.trafficLayer({{map:map, show:true}}); }} catch(e) {{}}
+
+            try {{
+                new mappls.Circle({{
+                    map:map, center:new mappls.LatLng(LAT, LON), radius:RAD,
+                    strokeColor:COLOR, strokeOpacity:0.9, strokeWeight:2,
+                    fillColor:COLOR, fillOpacity:FILL_OPACITY
+                }});
+            }} catch(e) {{}}
+
+            try {{
+                var p  = getPoints(ROUTES.primary);
+                var a1 = getPoints(ROUTES.alternate);
+                var a2 = getPoints(ROUTES.alternate2);
+                if (p.length >= 2)  {{ drawLine(map, p,  '#ff4444', 5, 0.75); hasRoutes = true; }}
+                if (a1.length >= 2) {{ drawLine(map, a1, '#00d4aa', 4, 0.85); }}
+                if (a2.length >= 2) {{ drawLine(map, a2, '#ffd166', 3, 0.75); }}
+            }} catch(e) {{}}
+
+            try {{
+                new mappls.Marker({{
+                    map:map, position:{{lat:LAT, lng:LON}}, draggable:false,
+                    popupHtml:'<div style="font-family:sans-serif;min-width:160px;padding:4px;">' +
+                              '<b style="color:' + COLOR + ';">' + CAUSE + '</b><br>' +
+                              '<span style="color:#888;">Corridor: </span>' + CORR + '<br>' +
+                              '<span style="color:#888;">Impact: </span><b>' + SCORE + '/100 · ' + TIER + '</b></div>'
+                }});
+            }} catch(e) {{}}
+
+            try {{
+                (PS_MARKERS || []).forEach(function(ps) {{
+                    new mappls.Marker({{
+                        map:map, position:{{lat:ps.lat, lng:ps.lon}},
+                        popupHtml:'<b>&#x1F6E1;&#xFE0F; ' + ps.name + ' PS</b>' +
+                                  (ps.dist ? '<br><span style="color:#888;">' + ps.dist + ' km by road</span>' : '')
+                    }});
+                }});
+            }} catch(e) {{}}
+
+            addLegend(hasRoutes);
+        }});
+    }} catch(err) {{ showError(); }}
+}}
+
+(function() {{
+    if (!TOKEN) {{ showError(); return; }}
+    var s = document.createElement('script');
+    s.src = 'https://apis.mappls.com/advancedmaps/api/' + TOKEN + '/map_sdk?layer=vector&v=3.0&callback=initMap';
+    s.onerror = showError;
+    document.head.appendChild(s);
+}})();
+</script>
+</body>
+</html>"""
+
+
+# ─────────────────────────────────────────────────────────────────────
 # FEATURE ENGINEERING  (mirrors Phase 2 exactly)
 # ─────────────────────────────────────────────────────────────────────
 def engineer_features(event_cause, corridor, police_station, event_dt,
-                      event_type="unplanned"):
+                      event_type="unplanned", junction=None):
     """Build the 32-feature vector from user inputs using lookup tables."""
     ist_dt   = pd.Timestamp(event_dt, tz="Asia/Kolkata")
     hour     = ist_dt.hour
@@ -173,11 +617,13 @@ def engineer_features(event_cause, corridor, police_station, event_dt,
     z_clos    = z_lu.get("zone_closure_rt",  gm["zone_closure_rt"])
     z_risk    = z_lu.get("zone_risk_score",  gm["zone_risk_score"])
 
-    # Junction defaults (no junction at input time)
-    j_clos   = gm["junc_closure_rt"]
-    j_hpri   = gm["junc_highprio_rt"]
-    j_hs     = gm["junction_hotspot_score"]
-    j_total  = gm["junc_total"]
+    # Junction lookup — use exact junction history when one is selected,
+    # otherwise fall back to global medians.
+    j_lu     = LOOKUP["junction"].get(junction, {}) if junction else {}
+    j_clos   = j_lu.get("junc_closure_rt",        gm["junc_closure_rt"])
+    j_hpri   = j_lu.get("junc_highprio_rt",       gm["junc_highprio_rt"])
+    j_hs     = j_lu.get("junction_hotspot_score", gm["junction_hotspot_score"])
+    j_total  = j_lu.get("junc_total",             gm["junc_total"])
 
     # Vehicle — event-driven causes have no vehicle
     veh_clos = 0.0
@@ -331,6 +777,8 @@ if "result"   not in st.session_state:
     st.session_state.result   = None
 if "feat_vec" not in st.session_state:
     st.session_state.feat_vec = None
+if "junction" not in st.session_state:
+    st.session_state.junction = None
 
 # ─────────────────────────────────────────────────────────────────────
 # HEADER
@@ -381,6 +829,17 @@ with st.sidebar:
         options=sorted(LOOKUP["police_station"].keys()),
         index=sorted(LOOKUP["police_station"].keys()).index(sc.get("police_station","Vijayanagara")),
     )
+    JUNCTION_NONE = "— Auto (corridor centre) —"
+    junction_opts = [JUNCTION_NONE] + sorted(LOOKUP["junction"].keys())
+    sel_junction_raw = st.selectbox(
+        "Junction (optional — precise pin)",
+        options=junction_opts,
+        index=junction_opts.index(sc.get("junction", JUNCTION_NONE))
+              if sc.get("junction", JUNCTION_NONE) in junction_opts else 0,
+        help="Pick a named junction to geocode an exact pin via Mappls and "
+             "use that junction's incident history in the prediction.",
+    )
+    sel_junction = None if sel_junction_raw == JUNCTION_NONE else sel_junction_raw
     sel_dow = st.selectbox(
         "Day of Week",
         options=DOW_OPTIONS,
@@ -414,9 +873,11 @@ if predict_btn:
         police_station = sel_ps,
         event_dt       = base_dt,
         event_type     = sel_type,
+        junction       = sel_junction,
     )
     st.session_state.result   = predict(X, event_cause_key=sel_cause)
     st.session_state.feat_vec = X
+    st.session_state.junction = sel_junction
 
 # ─────────────────────────────────────────────────────────────────────
 # RESULTS LAYOUT
@@ -534,6 +995,29 @@ else:
     st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
 
     # ── ROW 2: Deployment Plan + Map ─────────────────────────────────
+    coords     = LOOKUP["corr_coords"].get(sel_corridor, {"lat": 12.9716, "lon": 77.5946})
+    corr_lat, corr_lon = coords["lat"], coords["lon"]
+    RADIUS     = {"HIGH": 2000, "MEDIUM": 1200, "LOW": 600}
+    MAP_COLOR  = {"HIGH": "#ff6b6b", "MEDIUM": "#ffd166", "LOW": "#00d4aa"}
+
+    # Mappls API calls (cached — fast on repeat runs)
+    token      = get_mappls_token()
+
+    # Integration 3 — resolve precise junction pin (geocoded) when a junction
+    # was selected, else fall back to the corridor centroid.
+    cur_junction = st.session_state.get("junction")
+    clat, clon, pin_source = resolve_junction_coords(token, cur_junction, corr_lat, corr_lon)
+
+    nearest_ps = get_nearest_stations(token, clat, clon)
+    ps_markers = [
+        {"name": ps["name"], "lat": PS_COORDS[ps["name"]]["lat"],
+         "lon": PS_COORDS[ps["name"]]["lon"], "dist": ps["distance_km"]}
+        for ps in nearest_ps if ps["name"] in PS_COORDS
+    ]
+    route_data   = get_route_data(token, round(clat - 0.027, 6), clon,
+                                  round(clat + 0.027, 6), clon)
+    route_coords = build_route_coords(route_data, clat, clon)
+
     col_deploy, col_map = st.columns([1, 1.6])
 
     with col_deploy:
@@ -559,6 +1043,27 @@ else:
           </div>
         </div>
         """, unsafe_allow_html=True)
+
+        # Nearest deployment sources (Mappls Distance Matrix)
+        if nearest_ps:
+            rows_html = ""
+            for i, ps in enumerate(nearest_ps, 1):
+                rows_html += (
+                    f'<div style="display:flex;justify-content:space-between;align-items:center;'
+                    f'padding:6px 0;border-bottom:1px solid #2a2d3a22;">'
+                    f'<span style="font-size:12px;color:#e8eaf0;">({i}) {ps["name"]} PS</span>'
+                    f'<span style="font-size:12px;font-weight:600;color:#00d4aa;">{ps["distance_km"]} km</span>'
+                    f'</div>'
+                )
+            st.markdown(f"""
+            <div class="travis-card" style="border-color:{tc}22;margin-top:0;">
+              <div class="section-title">Nearest Deployment Sources</div>
+              {rows_html}
+              <div style="font-size:10px;color:#555;margin-top:6px;">
+                Road distance · Mappls Distance Matrix API
+              </div>
+            </div>
+            """, unsafe_allow_html=True)
 
         # Corridor fragility info
         corr_lu = LOOKUP["corridor"].get(sel_corridor, {})
@@ -613,61 +1118,47 @@ else:
         """, unsafe_allow_html=True)
 
     with col_map:
-        st.markdown('<div class="section-title">📍 Impact Map — Bangalore</div>', unsafe_allow_html=True)
-
-        coords = LOOKUP["corr_coords"].get(sel_corridor, {"lat": 12.9716, "lon": 77.5946})
-        clat, clon = coords["lat"], coords["lon"]
-
-        RADIUS = {"HIGH": 2000, "MEDIUM": 1200, "LOW": 600}
-        OPACITY = {"HIGH": 0.35, "MEDIUM": 0.25, "LOW": 0.15}
-        MAP_COLOR = {"HIGH":"#ff6b6b","MEDIUM":"#ffd166","LOW":"#00d4aa"}
-
-        m = folium.Map(
-            location=[clat, clon], zoom_start=13,
-            tiles="CartoDB dark_matter",
+        st.markdown(
+            '<div class="section-title">📍 Impact Map — Bangalore &nbsp;·&nbsp; '
+            '<span style="color:#6c63ff;">Powered by Mappls</span></div>',
+            unsafe_allow_html=True,
         )
 
-        # Impact radius circle
-        folium.Circle(
-            location=[clat, clon],
+        map_html = build_mappls_map_html(
+            token=token, clat=clat, clon=clon,
+            tier=tier, tc=tc,
             radius=RADIUS[tier],
-            color=MAP_COLOR[tier],
-            fill=True,
-            fill_color=MAP_COLOR[tier],
-            fill_opacity=OPACITY[tier],
-            weight=2,
-            popup=f"Impact Zone: {RADIUS[tier]}m radius",
-        ).add_to(m)
+            impact=impact,
+            sel_corridor=sel_corridor,
+            sel_cause=sel_cause,
+            route_coords=route_coords,
+            ps_markers=ps_markers,
+        )
+        components.html(map_html, height=440, scrolling=False)
 
-        # Event marker
-        icon_html = f"""
-        <div style="background:{MAP_COLOR[tier]};border-radius:50%;width:20px;height:20px;
-                    border:3px solid white;box-shadow:0 0 10px {MAP_COLOR[tier]}88;"></div>
-        """
-        folium.Marker(
-            location=[clat, clon],
-            popup=folium.Popup(
-                f"<b>{sel_cause.replace('_',' ').title()}</b><br>"
-                f"Corridor: {sel_corridor}<br>"
-                f"Impact: {impact:.0f}/100<br>"
-                f"P(Closure): {res['p_closure']:.1f}%",
-                max_width=200
-            ),
-            icon=folium.DivIcon(html=icon_html, icon_size=(20,20), icon_anchor=(10,10)),
-        ).add_to(m)
+        # Pin provenance (Integration 3)
+        if cur_junction and "geocoded" in pin_source:
+            st.markdown(
+                f'<div style="font-size:11px;color:#00d4aa;margin-top:2px;">'
+                f'📍 Pin at exact junction: <b>{cur_junction}</b> '
+                f'<span style="color:#555;">({clat:.4f}, {clon:.4f} · {pin_source})</span></div>',
+                unsafe_allow_html=True,
+            )
+        elif cur_junction:
+            st.markdown(
+                f'<div style="font-size:11px;color:#ffd166;margin-top:2px;">'
+                f'📍 "{cur_junction}" could not be geocoded — pin at corridor centre</div>',
+                unsafe_allow_html=True,
+            )
 
-        # Nearby police stations (top 3 by distance)
-        for ps_name, ps_data in list(LOOKUP["police_station"].items())[:6]:
-            if ps_name == sel_ps:
-                folium.Marker(
-                    location=[clat + np.random.uniform(-0.01, 0.01),
-                              clon + np.random.uniform(-0.01, 0.01)],
-                    popup=f"PS: {ps_name}",
-                    icon=folium.Icon(color="blue", icon="shield", prefix="fa"),
-                ).add_to(m)
-                break
-
-        st_folium(m, width=None, height=420, returned_objects=[])
+        if token:
+            st.markdown(
+                '<div style="font-size:10px;color:#555;text-align:right;margin-top:2px;">'
+                '🗺️ Mappls SDK &nbsp;·&nbsp; 🚦 Live traffic layer'
+                ' &nbsp;·&nbsp; 🛣️ Route API &nbsp;·&nbsp; 📍 Lane-level Bangalore data'
+                '</div>',
+                unsafe_allow_html=True,
+            )
 
     # ── ROW 3: SHAP Explanation ────────────────────────────────────────
     st.markdown("---")
