@@ -1,0 +1,2842 @@
+{
+  "corridor": {
+    "Airport New South Road": {
+      "corr_closure_rt": 0.08,
+      "corr_high_prio_rt": 1.0,
+      "corr_med_res": 1.5998708734722222,
+      "corr_event_rt": 0.08,
+      "count": 50,
+      "corr_med_res_norm": 0.13332257278935186,
+      "corridor_fragility": 45.87,
+      "corridor_fragility_norm": 100.0,
+      "corridor_te_requir": 0.08,
+      "corridor_te_priori": 1.0
+    },
+    "Bannerghata Road": {
+      "corr_closure_rt": 0.014285714285714285,
+      "corr_high_prio_rt": 1.0,
+      "corr_med_res": 0.6877547224999999,
+      "corr_event_rt": 0.014285714285714285,
+      "count": 140,
+      "corr_med_res_norm": 0.05731289354166666,
+      "corridor_fragility": 41.72,
+      "corridor_fragility_norm": 89.79,
+      "corridor_te_requir": 0.014285714285714285,
+      "corridor_te_priori": 1.0
+    },
+    "Bellary Road 1": {
+      "corr_closure_rt": 0.04513064133016627,
+      "corr_high_prio_rt": 1.0,
+      "corr_med_res": 0.8483526279166667,
+      "corr_event_rt": 0.04513064133016627,
+      "count": 421,
+      "corr_med_res_norm": 0.07069605232638888,
+      "corridor_fragility": 43.22,
+      "corridor_fragility_norm": 93.48,
+      "corridor_te_requir": 0.04513064133016627,
+      "corridor_te_priori": 1.0
+    },
+    "Bellary Road 2": {
+      "corr_closure_rt": 0.034013605442176874,
+      "corr_high_prio_rt": 1.0,
+      "corr_med_res": 1.013306406388889,
+      "corr_event_rt": 0.034013605442176874,
+      "count": 294,
+      "corr_med_res_norm": 0.08444220053240742,
+      "corridor_fragility": 43.05,
+      "corridor_fragility_norm": 93.06,
+      "corridor_te_requir": 0.034013605442176874,
+      "corridor_te_priori": 1.0
+    },
+    "CBD 1": {
+      "corr_closure_rt": 0.0,
+      "corr_high_prio_rt": 1.0,
+      "corr_med_res": 0.9202679122222224,
+      "corr_event_rt": 0.0,
+      "count": 13,
+      "corr_med_res_norm": 0.0766889926851852,
+      "corridor_fragility": 41.53,
+      "corridor_fragility_norm": 89.32,
+      "corridor_te_requir": 0.0,
+      "corridor_te_priori": 1.0
+    },
+    "CBD 2": {
+      "corr_closure_rt": 0.08571428571428572,
+      "corr_high_prio_rt": 1.0,
+      "corr_med_res": 1.2906843831944448,
+      "corr_event_rt": 0.08571428571428572,
+      "count": 70,
+      "corr_med_res_norm": 0.1075570319328704,
+      "corridor_fragility": 45.58,
+      "corridor_fragility_norm": 99.29,
+      "corridor_te_requir": 0.08571428571428572,
+      "corridor_te_priori": 1.0
+    },
+    "Hennur Main Road": {
+      "corr_closure_rt": 0.028169014084507043,
+      "corr_high_prio_rt": 1.0,
+      "corr_med_res": 1.6481735745833335,
+      "corr_event_rt": 0.028169014084507043,
+      "count": 71,
+      "corr_med_res_norm": 0.13734779788194446,
+      "corridor_fragility": 43.87,
+      "corridor_fragility_norm": 95.08,
+      "corridor_te_requir": 0.028169014084507043,
+      "corridor_te_priori": 1.0
+    },
+    "Hosur Road": {
+      "corr_closure_rt": 0.05194805194805195,
+      "corr_high_prio_rt": 1.0,
+      "corr_med_res": 0.9911821719444444,
+      "corr_event_rt": 0.05194805194805195,
+      "count": 231,
+      "corr_med_res_norm": 0.0825985143287037,
+      "corridor_fragility": 43.73,
+      "corridor_fragility_norm": 94.73,
+      "corridor_te_requir": 0.05194805194805195,
+      "corridor_te_priori": 1.0
+    },
+    "IRR(Thanisandra road)": {
+      "corr_closure_rt": 0.09523809523809523,
+      "corr_high_prio_rt": 1.0,
+      "corr_med_res": 0.7847278397222223,
+      "corr_event_rt": 0.09523809523809523,
+      "count": 63,
+      "corr_med_res_norm": 0.06539398664351852,
+      "corridor_fragility": 45.12,
+      "corridor_fragility_norm": 98.15,
+      "corridor_te_requir": 0.09523809523809523,
+      "corridor_te_priori": 1.0
+    },
+    "Magadi Road": {
+      "corr_closure_rt": 0.050314465408805034,
+      "corr_high_prio_rt": 1.0,
+      "corr_med_res": 1.0660831791666667,
+      "corr_event_rt": 0.050314465408805034,
+      "count": 159,
+      "corr_med_res_norm": 0.08884026493055557,
+      "corridor_fragility": 43.79,
+      "corridor_fragility_norm": 94.88,
+      "corridor_te_requir": 0.050314465408805034,
+      "corridor_te_priori": 1.0
+    },
+    "Mysore Road": {
+      "corr_closure_rt": 0.0836734693877551,
+      "corr_high_prio_rt": 0.9959183673469387,
+      "corr_med_res": 0.7049812338888888,
+      "corr_event_rt": 0.0836734693877551,
+      "count": 490,
+      "corr_med_res_norm": 0.0587484361574074,
+      "corridor_fragility": 44.36,
+      "corridor_fragility_norm": 96.28,
+      "corridor_te_requir": 0.0836734693877551,
+      "corridor_te_priori": 0.9959183673469387
+    },
+    "Non-corridor": {
+      "corr_closure_rt": 0.0910843373493976,
+      "corr_high_prio_rt": 0.002891566265060241,
+      "corr_med_res": 0.889055636388889,
+      "corr_event_rt": 0.0910843373493976,
+      "count": 2075,
+      "corr_med_res_norm": 0.07408796969907408,
+      "corridor_fragility": 5.24,
+      "corridor_fragility_norm": 0.0,
+      "corridor_te_requir": 0.0910843373493976,
+      "corridor_te_priori": 0.002891566265060241
+    },
+    "ORR East 1": {
+      "corr_closure_rt": 0.08695652173913043,
+      "corr_high_prio_rt": 1.0,
+      "corr_med_res": 0.9256954752777776,
+      "corr_event_rt": 0.08695652173913043,
+      "count": 161,
+      "corr_med_res_norm": 0.07714128960648146,
+      "corridor_fragility": 45.02,
+      "corridor_fragility_norm": 97.91,
+      "corridor_te_requir": 0.08695652173913043,
+      "corridor_te_priori": 1.0
+    },
+    "ORR East 2": {
+      "corr_closure_rt": 0.017857142857142856,
+      "corr_high_prio_rt": 1.0,
+      "corr_med_res": 0.8286761652777778,
+      "corr_event_rt": 0.017857142857142856,
+      "count": 112,
+      "corr_med_res_norm": 0.06905634710648148,
+      "corridor_fragility": 42.1,
+      "corridor_fragility_norm": 90.72,
+      "corridor_te_requir": 0.017857142857142856,
+      "corridor_te_priori": 1.0
+    },
+    "ORR North 1": {
+      "corr_closure_rt": 0.07303370786516854,
+      "corr_high_prio_rt": 1.0,
+      "corr_med_res": 0.8660485524999999,
+      "corr_event_rt": 0.07303370786516854,
+      "count": 178,
+      "corr_med_res_norm": 0.07217071270833332,
+      "corridor_fragility": 44.36,
+      "corridor_fragility_norm": 96.28,
+      "corridor_te_requir": 0.07303370786516854,
+      "corridor_te_priori": 1.0
+    },
+    "ORR North 2": {
+      "corr_closure_rt": 0.05806451612903226,
+      "corr_high_prio_rt": 1.0,
+      "corr_med_res": 0.8471203197222222,
+      "corr_event_rt": 0.05806451612903226,
+      "count": 155,
+      "corr_med_res_norm": 0.07059335997685186,
+      "corridor_fragility": 43.73,
+      "corridor_fragility_norm": 94.73,
+      "corridor_te_requir": 0.05806451612903226,
+      "corridor_te_priori": 1.0
+    },
+    "ORR West 1": {
+      "corr_closure_rt": 0.02608695652173913,
+      "corr_high_prio_rt": 1.0,
+      "corr_med_res": 1.0070814445833334,
+      "corr_event_rt": 0.02608695652173913,
+      "count": 115,
+      "corr_med_res_norm": 0.08392345371527778,
+      "corridor_fragility": 42.72,
+      "corridor_fragility_norm": 92.25,
+      "corridor_te_requir": 0.02608695652173913,
+      "corridor_te_priori": 1.0
+    },
+    "Old Airport Road": {
+      "corr_closure_rt": 0.058823529411764705,
+      "corr_high_prio_rt": 1.0,
+      "corr_med_res": 1.0247347659722221,
+      "corr_event_rt": 0.058823529411764705,
+      "count": 51,
+      "corr_med_res_norm": 0.08539456383101851,
+      "corridor_fragility": 44.06,
+      "corridor_fragility_norm": 95.55,
+      "corridor_te_requir": 0.058823529411764705,
+      "corridor_te_priori": 1.0
+    },
+    "Old Madras Road": {
+      "corr_closure_rt": 0.017045454545454544,
+      "corr_high_prio_rt": 1.0,
+      "corr_med_res": 0.6307722983333334,
+      "corr_event_rt": 0.017045454545454544,
+      "count": 176,
+      "corr_med_res_norm": 0.052564358194444445,
+      "corridor_fragility": 41.73,
+      "corridor_fragility_norm": 89.81,
+      "corridor_te_requir": 0.017045454545454544,
+      "corridor_te_priori": 1.0
+    },
+    "Tumkur Road": {
+      "corr_closure_rt": 0.02821316614420063,
+      "corr_high_prio_rt": 0.987460815047022,
+      "corr_med_res": 0.5826635319444444,
+      "corr_event_rt": 0.02821316614420063,
+      "count": 319,
+      "corr_med_res_norm": 0.0485552943287037,
+      "corridor_fragility": 41.6,
+      "corridor_fragility_norm": 89.49,
+      "corridor_te_requir": 0.02821316614420063,
+      "corridor_te_priori": 0.987460815047022
+    },
+    "Varthur Road": {
+      "corr_closure_rt": 0.1,
+      "corr_high_prio_rt": 1.0,
+      "corr_med_res": 0.8853901208333333,
+      "corr_event_rt": 0.1,
+      "count": 50,
+      "corr_med_res_norm": 0.07378251006944445,
+      "corridor_fragility": 45.48,
+      "corridor_fragility_norm": 99.04,
+      "corridor_te_requir": 0.1,
+      "corridor_te_priori": 1.0
+    },
+    "West of Chord Road": {
+      "corr_closure_rt": 0.06060606060606061,
+      "corr_high_prio_rt": 1.0,
+      "corr_med_res": 0.731183380138889,
+      "corr_event_rt": 0.06060606060606061,
+      "count": 99,
+      "corr_med_res_norm": 0.060931948344907415,
+      "corridor_fragility": 43.64,
+      "corridor_fragility_norm": 94.51,
+      "corridor_te_requir": 0.06060606060606061,
+      "corridor_te_priori": 1.0
+    }
+  },
+  "police_station": {
+    "Adugodi": {
+      "ps_closure_rt": 0.11688311688311688,
+      "ps_highprio_rt": 0.6623376623376623,
+      "ps_med_res": 0.9852156652777776,
+      "count": 77,
+      "ps_hotspot_score": 44.416,
+      "police_station_te_requir": 0.11688311688311688,
+      "police_station_te_priori": 0.6623376623376623
+    },
+    "Ashok Nagar": {
+      "ps_closure_rt": 0.09401709401709402,
+      "ps_highprio_rt": 0.7692307692307693,
+      "ps_med_res": 1.0856874838888888,
+      "count": 117,
+      "ps_hotspot_score": 49.915,
+      "police_station_te_requir": 0.09401709401709402,
+      "police_station_te_priori": 0.7692307692307693
+    },
+    "Banashankari": {
+      "ps_closure_rt": 0.04477611940298507,
+      "ps_highprio_rt": 0.7014925373134329,
+      "ps_med_res": 0.9560604912499999,
+      "count": 67,
+      "ps_hotspot_score": 43.881,
+      "police_station_te_requir": 0.04477611940298507,
+      "police_station_te_priori": 0.7014925373134329
+    },
+    "Banaswadi": {
+      "ps_closure_rt": 0.10843373493975904,
+      "ps_highprio_rt": 0.7831325301204819,
+      "ps_med_res": 0.9118434480555556,
+      "count": 166,
+      "ps_hotspot_score": 51.325,
+      "police_station_te_requir": 0.10843373493975904,
+      "police_station_te_priori": 0.7831325301204819
+    },
+    "Basavanagudi": {
+      "ps_closure_rt": 0.0,
+      "ps_highprio_rt": 0.0,
+      "ps_med_res": 0.7602573458333334,
+      "count": 14,
+      "ps_hotspot_score": 0.0,
+      "police_station_te_requir": 0.0,
+      "police_station_te_priori": 0.0
+    },
+    "Bellandur": {
+      "ps_closure_rt": 0.08695652173913043,
+      "ps_highprio_rt": 0.6376811594202898,
+      "ps_med_res": 0.7519418031944445,
+      "count": 69,
+      "ps_hotspot_score": 41.739,
+      "police_station_te_requir": 0.08695652173913043,
+      "police_station_te_priori": 0.6376811594202898
+    },
+    "Byatarayanapura": {
+      "ps_closure_rt": 0.047619047619047616,
+      "ps_highprio_rt": 0.9285714285714286,
+      "ps_med_res": 0.8235586930555556,
+      "count": 210,
+      "ps_hotspot_score": 57.619,
+      "police_station_te_requir": 0.047619047619047616,
+      "police_station_te_priori": 0.9285714285714286
+    },
+    "Chamarajpet": {
+      "ps_closure_rt": 0.06363636363636363,
+      "ps_highprio_rt": 0.6181818181818182,
+      "ps_med_res": 0.6242460838888889,
+      "count": 110,
+      "ps_hotspot_score": 39.636,
+      "police_station_te_requir": 0.06363636363636363,
+      "police_station_te_priori": 0.6181818181818182
+    },
+    "Chikkabanavara": {
+      "ps_closure_rt": 0.011904761904761904,
+      "ps_highprio_rt": 0.5833333333333334,
+      "ps_med_res": 0.5136887522222222,
+      "count": 84,
+      "ps_hotspot_score": 35.476,
+      "police_station_te_requir": 0.011904761904761904,
+      "police_station_te_priori": 0.5833333333333334
+    },
+    "Chikkajala": {
+      "ps_closure_rt": 0.01818181818181818,
+      "ps_highprio_rt": 0.7090909090909091,
+      "ps_med_res": 0.7947727459722222,
+      "count": 55,
+      "ps_hotspot_score": 43.273,
+      "police_station_te_requir": 0.01818181818181818,
+      "police_station_te_priori": 0.7090909090909091
+    },
+    "City Market": {
+      "ps_closure_rt": 0.2777777777777778,
+      "ps_highprio_rt": 0.6111111111111112,
+      "ps_med_res": 0.7846272156944445,
+      "count": 18,
+      "ps_hotspot_score": 47.778,
+      "police_station_te_requir": 0.2777777777777778,
+      "police_station_te_priori": 0.6111111111111112
+    },
+    "Cubbon Park": {
+      "ps_closure_rt": 0.04580152671755725,
+      "ps_highprio_rt": 0.8015267175572519,
+      "ps_med_res": 1.1370930334722222,
+      "count": 131,
+      "ps_hotspot_score": 49.924,
+      "police_station_te_requir": 0.04580152671755725,
+      "police_station_te_priori": 0.8015267175572519
+    },
+    "Devanahalli Airport": {
+      "ps_closure_rt": 0.03571428571428571,
+      "ps_highprio_rt": 0.0,
+      "ps_med_res": 0.9366640490277778,
+      "count": 28,
+      "ps_hotspot_score": 1.429,
+      "police_station_te_requir": 0.03571428571428571,
+      "police_station_te_priori": 0.0
+    },
+    "Electronic City": {
+      "ps_closure_rt": 0.02040816326530612,
+      "ps_highprio_rt": 0.3163265306122449,
+      "ps_med_res": 0.9773324351388888,
+      "count": 98,
+      "ps_hotspot_score": 19.796,
+      "police_station_te_requir": 0.02040816326530612,
+      "police_station_te_priori": 0.3163265306122449
+    },
+    "HAL Old Airport": {
+      "ps_closure_rt": 0.04721030042918455,
+      "ps_highprio_rt": 0.8583690987124464,
+      "ps_med_res": 1.304540631388889,
+      "count": 233,
+      "ps_hotspot_score": 53.391,
+      "police_station_te_requir": 0.04721030042918455,
+      "police_station_te_priori": 0.8583690987124464
+    },
+    "HSR Layout": {
+      "ps_closure_rt": 0.10810810810810811,
+      "ps_highprio_rt": 0.972972972972973,
+      "ps_med_res": 0.6753948511111111,
+      "count": 74,
+      "ps_hotspot_score": 62.703,
+      "police_station_te_requir": 0.10810810810810811,
+      "police_station_te_priori": 0.972972972972973
+    },
+    "Halasur": {
+      "ps_closure_rt": 0.057971014492753624,
+      "ps_highprio_rt": 0.5942028985507246,
+      "ps_med_res": 0.6763294215277778,
+      "count": 69,
+      "ps_hotspot_score": 37.971,
+      "police_station_te_requir": 0.057971014492753624,
+      "police_station_te_priori": 0.5942028985507246
+    },
+    "Halasuru Gate": {
+      "ps_closure_rt": 0.1346153846153846,
+      "ps_highprio_rt": 0.7259615384615384,
+      "ps_med_res": 0.6879408955555555,
+      "count": 208,
+      "ps_hotspot_score": 48.942,
+      "police_station_te_requir": 0.1346153846153846,
+      "police_station_te_priori": 0.7259615384615384
+    },
+    "Hebbala": {
+      "ps_closure_rt": 0.07,
+      "ps_highprio_rt": 0.92,
+      "ps_med_res": 0.6124522069444445,
+      "count": 100,
+      "ps_hotspot_score": 58.0,
+      "police_station_te_requir": 0.07,
+      "police_station_te_priori": 0.92
+    },
+    "Hennuru": {
+      "ps_closure_rt": 0.06896551724137931,
+      "ps_highprio_rt": 0.7192118226600985,
+      "ps_med_res": 1.90357838,
+      "count": 203,
+      "ps_hotspot_score": 45.911,
+      "police_station_te_requir": 0.06896551724137931,
+      "police_station_te_priori": 0.7192118226600985
+    },
+    "High ground": {
+      "ps_closure_rt": 0.0660377358490566,
+      "ps_highprio_rt": 0.5754716981132075,
+      "ps_med_res": 0.9109755855555556,
+      "count": 106,
+      "ps_hotspot_score": 37.17,
+      "police_station_te_requir": 0.0660377358490566,
+      "police_station_te_priori": 0.5754716981132075
+    },
+    "Hulimavu": {
+      "ps_closure_rt": 0.0,
+      "ps_highprio_rt": 0.5631067961165048,
+      "ps_med_res": 0.9611719622222222,
+      "count": 103,
+      "ps_hotspot_score": 33.786,
+      "police_station_te_requir": 0.0,
+      "police_station_te_priori": 0.5631067961165048
+    },
+    "J.P. Nagar": {
+      "ps_closure_rt": 0.07575757575757576,
+      "ps_highprio_rt": 0.7121212121212122,
+      "ps_med_res": 1.5895981230555556,
+      "count": 66,
+      "ps_hotspot_score": 45.758,
+      "police_station_te_requir": 0.07575757575757576,
+      "police_station_te_priori": 0.7121212121212122
+    },
+    "Jalahalli": {
+      "ps_closure_rt": 0.07258064516129033,
+      "ps_highprio_rt": 0.8225806451612904,
+      "ps_med_res": 0.7546231305555555,
+      "count": 124,
+      "ps_hotspot_score": 52.258,
+      "police_station_te_requir": 0.07258064516129033,
+      "police_station_te_priori": 0.8225806451612904
+    },
+    "Jayanagara": {
+      "ps_closure_rt": 0.0380952380952381,
+      "ps_highprio_rt": 0.0761904761904762,
+      "ps_med_res": 0.9887276266666667,
+      "count": 105,
+      "ps_hotspot_score": 6.095,
+      "police_station_te_requir": 0.0380952380952381,
+      "police_station_te_priori": 0.0761904761904762
+    },
+    "Jeevanbheemanagar": {
+      "ps_closure_rt": 0.06976744186046512,
+      "ps_highprio_rt": 0.8604651162790697,
+      "ps_med_res": 0.4729462413888889,
+      "count": 86,
+      "ps_hotspot_score": 54.419,
+      "police_station_te_requir": 0.06976744186046512,
+      "police_station_te_priori": 0.8604651162790697
+    },
+    "Jnanabharathi": {
+      "ps_closure_rt": 0.05102040816326531,
+      "ps_highprio_rt": 0.11224489795918367,
+      "ps_med_res": 0.8770991448611112,
+      "count": 98,
+      "ps_hotspot_score": 8.776,
+      "police_station_te_requir": 0.05102040816326531,
+      "police_station_te_priori": 0.11224489795918367
+    },
+    "K.G. Halli": {
+      "ps_closure_rt": 0.24074074074074073,
+      "ps_highprio_rt": 0.7407407407407407,
+      "ps_med_res": 1.5998708734722222,
+      "count": 54,
+      "ps_hotspot_score": 54.074,
+      "police_station_te_requir": 0.24074074074074073,
+      "police_station_te_priori": 0.7407407407407407
+    },
+    "K.R. Pura": {
+      "ps_closure_rt": 0.1419753086419753,
+      "ps_highprio_rt": 0.05555555555555555,
+      "ps_med_res": 0.7253042527777778,
+      "count": 162,
+      "ps_hotspot_score": 9.012,
+      "police_station_te_requir": 0.1419753086419753,
+      "police_station_te_priori": 0.05555555555555555
+    },
+    "K.S. Layout": {
+      "ps_closure_rt": 0.0,
+      "ps_highprio_rt": 0.3235294117647059,
+      "ps_med_res": 13.115138606111111,
+      "count": 68,
+      "ps_hotspot_score": 19.412,
+      "police_station_te_requir": 0.0,
+      "police_station_te_priori": 0.3235294117647059
+    },
+    "Kamakshipalya": {
+      "ps_closure_rt": 0.06428571428571428,
+      "ps_highprio_rt": 0.8285714285714286,
+      "ps_med_res": 0.90567,
+      "count": 140,
+      "ps_hotspot_score": 52.286,
+      "police_station_te_requir": 0.06428571428571428,
+      "police_station_te_priori": 0.8285714285714286
+    },
+    "Kengeri": {
+      "ps_closure_rt": 0.2647058823529412,
+      "ps_highprio_rt": 0.47058823529411764,
+      "ps_med_res": 0.8913150876388889,
+      "count": 34,
+      "ps_hotspot_score": 38.824,
+      "police_station_te_requir": 0.2647058823529412,
+      "police_station_te_priori": 0.47058823529411764
+    },
+    "Kodigehalli": {
+      "ps_closure_rt": 0.056818181818181816,
+      "ps_highprio_rt": 0.8920454545454546,
+      "ps_med_res": 0.9464110243055556,
+      "count": 176,
+      "ps_hotspot_score": 55.795,
+      "police_station_te_requir": 0.056818181818181816,
+      "police_station_te_priori": 0.8920454545454546
+    },
+    "Madiwala": {
+      "ps_closure_rt": 0.026845637583892617,
+      "ps_highprio_rt": 0.8187919463087249,
+      "ps_med_res": 0.7847278397222223,
+      "count": 149,
+      "ps_hotspot_score": 50.201,
+      "police_station_te_requir": 0.026845637583892617,
+      "police_station_te_priori": 0.8187919463087249
+    },
+    "Magadi Road": {
+      "ps_closure_rt": 0.04,
+      "ps_highprio_rt": 0.76,
+      "ps_med_res": 0.5567406483333334,
+      "count": 100,
+      "ps_hotspot_score": 47.2,
+      "police_station_te_requir": 0.04,
+      "police_station_te_priori": 0.76
+    },
+    "Mahadevapura": {
+      "ps_closure_rt": 0.0625,
+      "ps_highprio_rt": 0.25,
+      "ps_med_res": 0.630529411388889,
+      "count": 80,
+      "ps_hotspot_score": 17.5,
+      "police_station_te_requir": 0.0625,
+      "police_station_te_priori": 0.25
+    },
+    "Malleshwaram": {
+      "ps_closure_rt": 0.07142857142857142,
+      "ps_highprio_rt": 0.42857142857142855,
+      "ps_med_res": 1.966452167222222,
+      "count": 42,
+      "ps_hotspot_score": 28.571,
+      "police_station_te_requir": 0.07142857142857142,
+      "police_station_te_priori": 0.42857142857142855
+    },
+    "Mico Layout": {
+      "ps_closure_rt": 0.05747126436781609,
+      "ps_highprio_rt": 0.632183908045977,
+      "ps_med_res": 1.0551160113888889,
+      "count": 87,
+      "ps_hotspot_score": 40.23,
+      "police_station_te_requir": 0.05747126436781609,
+      "police_station_te_priori": 0.632183908045977
+    },
+    "No Police Station": {
+      "ps_closure_rt": 0.039473684210526314,
+      "ps_highprio_rt": 0.0,
+      "ps_med_res": NaN,
+      "count": 152,
+      "ps_hotspot_score": 1.579,
+      "police_station_te_requir": 0.039473684210526314,
+      "police_station_te_priori": 0.0
+    },
+    "Peenya": {
+      "ps_closure_rt": 0.032520325203252036,
+      "ps_highprio_rt": 0.7398373983739838,
+      "ps_med_res": 0.6502933969444444,
+      "count": 123,
+      "ps_hotspot_score": 45.691,
+      "police_station_te_requir": 0.032520325203252036,
+      "police_station_te_priori": 0.7398373983739838
+    },
+    "Pulikeshinagar(F.Town)": {
+      "ps_closure_rt": 0.10256410256410256,
+      "ps_highprio_rt": 0.1282051282051282,
+      "ps_med_res": 1.1357867995833333,
+      "count": 39,
+      "ps_hotspot_score": 11.795,
+      "police_station_te_requir": 0.10256410256410256,
+      "police_station_te_priori": 0.1282051282051282
+    },
+    "R.T. Nagar": {
+      "ps_closure_rt": 0.09090909090909091,
+      "ps_highprio_rt": 0.6477272727272727,
+      "ps_med_res": 0.9770183979166664,
+      "count": 88,
+      "ps_hotspot_score": 42.5,
+      "police_station_te_requir": 0.09090909090909091,
+      "police_station_te_priori": 0.6477272727272727
+    },
+    "Rajajinagar": {
+      "ps_closure_rt": 0.03125,
+      "ps_highprio_rt": 0.34375,
+      "ps_med_res": 0.7427684480555555,
+      "count": 64,
+      "ps_hotspot_score": 21.875,
+      "police_station_te_requir": 0.03125,
+      "police_station_te_priori": 0.34375
+    },
+    "Sadashivanagar": {
+      "ps_closure_rt": 0.05759162303664921,
+      "ps_highprio_rt": 0.8115183246073299,
+      "ps_med_res": 0.7160394438888888,
+      "count": 191,
+      "ps_hotspot_score": 50.995,
+      "police_station_te_requir": 0.05759162303664921,
+      "police_station_te_priori": 0.8115183246073299
+    },
+    "Sheshadripuram": {
+      "ps_closure_rt": 0.1125,
+      "ps_highprio_rt": 0.0875,
+      "ps_med_res": 0.7358347486111111,
+      "count": 80,
+      "ps_hotspot_score": 9.75,
+      "police_station_te_requir": 0.1125,
+      "police_station_te_priori": 0.0875
+    },
+    "Shivajinagar": {
+      "ps_closure_rt": 0.03389830508474576,
+      "ps_highprio_rt": 0.7966101694915254,
+      "ps_med_res": 1.0007783816666667,
+      "count": 59,
+      "ps_hotspot_score": 49.153,
+      "police_station_te_requir": 0.03389830508474576,
+      "police_station_te_priori": 0.7966101694915254
+    },
+    "Thalagattapura": {
+      "ps_closure_rt": 0.06666666666666667,
+      "ps_highprio_rt": 0.16666666666666666,
+      "ps_med_res": 0.8894581283333333,
+      "count": 30,
+      "ps_hotspot_score": 12.667,
+      "police_station_te_requir": 0.06666666666666667,
+      "police_station_te_priori": 0.16666666666666666
+    },
+    "Upparpet": {
+      "ps_closure_rt": 0.09302325581395349,
+      "ps_highprio_rt": 0.0,
+      "ps_med_res": 0.7083101144444445,
+      "count": 43,
+      "ps_hotspot_score": 3.721,
+      "police_station_te_requir": 0.09302325581395349,
+      "police_station_te_priori": 0.0
+    },
+    "V.V.Puram (C.Pet)": {
+      "ps_closure_rt": 0.13636363636363635,
+      "ps_highprio_rt": 0.13636363636363635,
+      "ps_med_res": 0.658093505,
+      "count": 22,
+      "ps_hotspot_score": 13.636,
+      "police_station_te_requir": 0.13636363636363635,
+      "police_station_te_priori": 0.13636363636363635
+    },
+    "Vijayanagara": {
+      "ps_closure_rt": 0.09090909090909091,
+      "ps_highprio_rt": 0.7272727272727273,
+      "ps_med_res": 0.7364726008333333,
+      "count": 33,
+      "ps_hotspot_score": 47.273,
+      "police_station_te_requir": 0.09090909090909091,
+      "police_station_te_priori": 0.7272727272727273
+    },
+    "Whitefield": {
+      "ps_closure_rt": 0.046296296296296294,
+      "ps_highprio_rt": 0.2222222222222222,
+      "ps_med_res": 0.7348910247222222,
+      "count": 108,
+      "ps_hotspot_score": 15.185,
+      "police_station_te_requir": 0.046296296296296294,
+      "police_station_te_priori": 0.2222222222222222
+    },
+    "Wilson Garden": {
+      "ps_closure_rt": 0.14925373134328357,
+      "ps_highprio_rt": 0.014925373134328358,
+      "ps_med_res": 0.7414237890277777,
+      "count": 67,
+      "ps_hotspot_score": 6.866,
+      "police_station_te_requir": 0.14925373134328357,
+      "police_station_te_priori": 0.014925373134328358
+    },
+    "Yelahanka": {
+      "ps_closure_rt": 0.04452054794520548,
+      "ps_highprio_rt": 0.791095890410959,
+      "ps_med_res": 1.1176426799999999,
+      "count": 292,
+      "ps_hotspot_score": 49.247,
+      "police_station_te_requir": 0.04452054794520548,
+      "police_station_te_priori": 0.791095890410959
+    },
+    "Yeshwanthpura": {
+      "ps_closure_rt": 0.03664921465968586,
+      "ps_highprio_rt": 0.900523560209424,
+      "ps_med_res": 0.6396444305555555,
+      "count": 191,
+      "ps_hotspot_score": 55.497,
+      "police_station_te_requir": 0.03664921465968586,
+      "police_station_te_priori": 0.900523560209424
+    }
+  },
+  "cause": {
+    "accident": {
+      "cause_closure_rate_hist": 0.02356902356902357,
+      "cause_highprio_rt": 0.43434343434343436,
+      "count": 297,
+      "cause_impact_rank": 2
+    },
+    "congestion": {
+      "cause_closure_rate_hist": 0.03488372093023256,
+      "cause_highprio_rt": 0.6511627906976745,
+      "count": 86,
+      "cause_impact_rank": 2
+    },
+    "construction": {
+      "cause_closure_rate_hist": 0.23121387283236994,
+      "cause_highprio_rt": 0.6589595375722543,
+      "count": 346,
+      "cause_impact_rank": 3
+    },
+    "debris": {
+      "cause_closure_rate_hist": 0.0,
+      "cause_highprio_rt": 0.6666666666666666,
+      "count": 9,
+      "cause_impact_rank": 0
+    },
+    "fog": {
+      "cause_closure_rate_hist": 0.0,
+      "cause_highprio_rt": 0.5,
+      "count": 2,
+      "cause_impact_rank": 0
+    },
+    "others": {
+      "cause_closure_rate_hist": 0.08333333333333333,
+      "cause_highprio_rt": 0.5897435897435898,
+      "count": 468,
+      "cause_impact_rank": 0
+    },
+    "pot_holes": {
+      "cause_closure_rate_hist": 0.02168021680216802,
+      "cause_highprio_rt": 0.5474254742547425,
+      "count": 369,
+      "cause_impact_rank": 1
+    },
+    "procession": {
+      "cause_closure_rate_hist": 0.24528301886792453,
+      "cause_highprio_rt": 0.2830188679245283,
+      "count": 53,
+      "cause_impact_rank": 4
+    },
+    "protest": {
+      "cause_closure_rate_hist": 0.36363636363636365,
+      "cause_highprio_rt": 0.45454545454545453,
+      "count": 11,
+      "cause_impact_rank": 3
+    },
+    "public_event": {
+      "cause_closure_rate_hist": 0.25,
+      "cause_highprio_rt": 0.4166666666666667,
+      "count": 36,
+      "cause_impact_rank": 4
+    },
+    "road_conditions": {
+      "cause_closure_rate_hist": 0.10084033613445378,
+      "cause_highprio_rt": 0.5294117647058824,
+      "count": 119,
+      "cause_impact_rank": 1
+    },
+    "test_demo": {
+      "cause_closure_rate_hist": 0.0,
+      "cause_highprio_rt": 0.5,
+      "count": 2,
+      "cause_impact_rank": 0
+    },
+    "tree_fall": {
+      "cause_closure_rate_hist": 0.425531914893617,
+      "cause_highprio_rt": 0.2978723404255319,
+      "count": 47,
+      "cause_impact_rank": 1
+    },
+    "vehicle_breakdown": {
+      "cause_closure_rate_hist": 0.04639321074964639,
+      "cause_highprio_rt": 0.6622347949080623,
+      "count": 3535,
+      "cause_impact_rank": 0
+    },
+    "vip_movement": {
+      "cause_closure_rate_hist": 0.0,
+      "cause_highprio_rt": 0.5,
+      "count": 4,
+      "cause_impact_rank": 5
+    },
+    "water_logging": {
+      "cause_closure_rate_hist": 0.06422018348623854,
+      "cause_highprio_rt": 0.5871559633027523,
+      "count": 109,
+      "cause_impact_rank": 1
+    }
+  },
+  "zone": {
+    "Central Zone 1": {
+      "zone_closure_rt": 0.1320754716981132,
+      "zone_highprio_rt": 0.7584905660377359,
+      "zone_risk_score": 44.528
+    },
+    "Central Zone 2": {
+      "zone_closure_rt": 0.06622516556291391,
+      "zone_highprio_rt": 0.5447019867549668,
+      "zone_risk_score": 30.546
+    },
+    "East Zone 1": {
+      "zone_closure_rt": 0.05263157894736842,
+      "zone_highprio_rt": 0.5991902834008097,
+      "zone_risk_score": 32.591
+    },
+    "East Zone 2": {
+      "zone_closure_rt": 0.13756613756613756,
+      "zone_highprio_rt": 0.31746031746031744,
+      "zone_risk_score": 22.751
+    },
+    "North Zone 1": {
+      "zone_closure_rt": 0.08387096774193549,
+      "zone_highprio_rt": 0.8,
+      "zone_risk_score": 44.194
+    },
+    "North Zone 2": {
+      "zone_closure_rt": 0.0535279805352798,
+      "zone_highprio_rt": 0.7956204379562044,
+      "zone_risk_score": 42.457
+    },
+    "South Zone 1": {
+      "zone_closure_rt": 0.030837004405286344,
+      "zone_highprio_rt": 0.29955947136563876,
+      "zone_risk_score": 16.52
+    },
+    "South Zone 2": {
+      "zone_closure_rt": 0.05084745762711865,
+      "zone_highprio_rt": 0.748587570621469,
+      "zone_risk_score": 39.972
+    },
+    "West Zone 1": {
+      "zone_closure_rt": 0.05647058823529412,
+      "zone_highprio_rt": 0.6282352941176471,
+      "zone_risk_score": 34.235
+    },
+    "West Zone 2": {
+      "zone_closure_rt": 0.04201680672268908,
+      "zone_highprio_rt": 0.8263305322128851,
+      "zone_risk_score": 43.417
+    }
+  },
+  "junction": {
+    "17th Mn 1st Crs Aishwarya Stores Jn": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 0.0
+    },
+    "27th Cross Jayanagar(Ganapathi Temple)": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 0.0
+    },
+    "28thMainJayanagarJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.16666666666666666,
+      "junc_total": 6,
+      "junction_hotspot_score": 8.333
+    },
+    "29thMainRdBTM LayoutJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 5,
+      "junction_hotspot_score": 0.0
+    },
+    "5thMainHSR": {
+      "junc_closure_rt": 0.3333333333333333,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 3,
+      "junction_hotspot_score": 66.667
+    },
+    "5thMainRPC Layout-Vijayanagar": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 3,
+      "junction_hotspot_score": 50.0
+    },
+    "A S CharStreet-MysoreRdJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 5,
+      "junction_hotspot_score": 50.0
+    },
+    "ASC Junction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 3,
+      "junction_hotspot_score": 0.0
+    },
+    "AdugodiJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 2,
+      "junction_hotspot_score": 50.0
+    },
+    "AgaraJunction": {
+      "junc_closure_rt": 0.3333333333333333,
+      "junc_highprio_rt": 0.8333333333333334,
+      "junc_total": 6,
+      "junction_hotspot_score": 58.333
+    },
+    "AnandRaoJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 7,
+      "junction_hotspot_score": 0.0
+    },
+    "AnepalyaJunc": {
+      "junc_closure_rt": 0.4,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 5,
+      "junction_hotspot_score": 70.0
+    },
+    "AnilKumbleCircle": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 8,
+      "junction_hotspot_score": 50.0
+    },
+    "AnjaneyaTempleJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 3,
+      "junction_hotspot_score": 50.0
+    },
+    "ArakereGateJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.9333333333333333,
+      "junc_total": 15,
+      "junction_hotspot_score": 46.667
+    },
+    "Arbindo Circle": {
+      "junc_closure_rt": 0.3,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 10,
+      "junction_hotspot_score": 15.0
+    },
+    "Arts&CraftsCircle": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 2,
+      "junction_hotspot_score": 50.0
+    },
+    "AshirwadamCircle": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 5,
+      "junction_hotspot_score": 50.0
+    },
+    "Ashoknagar Junction(ShoolayCircle)": {
+      "junc_closure_rt": 0.3333333333333333,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 6,
+      "junction_hotspot_score": 66.667
+    },
+    "AttiguppeCircleJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 50.0
+    },
+    "AyyappaTempleJunc": {
+      "junc_closure_rt": 0.02040816326530612,
+      "junc_highprio_rt": 0.9795918367346939,
+      "junc_total": 49,
+      "junction_hotspot_score": 50.0
+    },
+    "BDA Junctio-Koramangala": {
+      "junc_closure_rt": 0.3333333333333333,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 6,
+      "junction_hotspot_score": 66.667
+    },
+    "BEL Circle": {
+      "junc_closure_rt": 0.08,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 25,
+      "junction_hotspot_score": 54.0
+    },
+    "BEML GateJunc(SuranjandasRd)": {
+      "junc_closure_rt": 0.5,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 2,
+      "junction_hotspot_score": 25.0
+    },
+    "BHEL Gate": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 0.0
+    },
+    "BM ShriJunc(CMH-100FtRd)Junc": {
+      "junc_closure_rt": 0.6666666666666666,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 3,
+      "junction_hotspot_score": 83.333
+    },
+    "BMTCJunction-K H Road": {
+      "junc_closure_rt": 0.2222222222222222,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 9,
+      "junction_hotspot_score": 11.111
+    },
+    "BTM16thMain-ORR Junc": {
+      "junc_closure_rt": 0.16666666666666666,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 6,
+      "junction_hotspot_score": 8.333
+    },
+    "BagalakunteCrossJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 2,
+      "junction_hotspot_score": 0.0
+    },
+    "BagalurCrossJunc": {
+      "junc_closure_rt": 0.037037037037037035,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 27,
+      "junction_hotspot_score": 51.852
+    },
+    "Bamboobazar(Shivajinagar)": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 2,
+      "junction_hotspot_score": 0.0
+    },
+    "BanashankariBusStandJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 11,
+      "junction_hotspot_score": 0.0
+    },
+    "BangaloreBodyBuildersJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 19,
+      "junction_hotspot_score": 50.0
+    },
+    "Basappa Circle Junction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 3,
+      "junction_hotspot_score": 0.0
+    },
+    "BasavamantapaJunc-Dr RajkumarRd": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 2,
+      "junction_hotspot_score": 0.0
+    },
+    "BasaweshwaraCircle": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 5,
+      "junction_hotspot_score": 50.0
+    },
+    "Basveshwarnagar 8th main Junction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 0.0
+    },
+    "Batrayanapura(Amrutahalli)Junction": {
+      "junc_closure_rt": 0.07142857142857142,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 14,
+      "junction_hotspot_score": 53.571
+    },
+    "BegumMahalJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.5,
+      "junc_total": 4,
+      "junction_hotspot_score": 25.0
+    },
+    "Bellandur Junction, Outer ring road": {
+      "junc_closure_rt": 0.3333333333333333,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 3,
+      "junction_hotspot_score": 66.667
+    },
+    "BhadrappaLayout": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 2,
+      "junction_hotspot_score": 50.0
+    },
+    "BhashyamCircle": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.3333333333333333,
+      "junc_total": 3,
+      "junction_hotspot_score": 16.667
+    },
+    "BhashyamCircle-SadashivNagar": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 4,
+      "junction_hotspot_score": 0.0
+    },
+    "BigBazaar(Whitefield)Junc": {
+      "junc_closure_rt": 0.125,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 8,
+      "junction_hotspot_score": 6.25
+    },
+    "BigBazaarJunction(OldMadrasRd)": {
+      "junc_closure_rt": 0.038461538461538464,
+      "junc_highprio_rt": 0.9230769230769231,
+      "junc_total": 26,
+      "junction_hotspot_score": 48.077
+    },
+    "BilekahalliJunc": {
+      "junc_closure_rt": 0.07142857142857142,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 14,
+      "junction_hotspot_score": 53.571
+    },
+    "BinnyMillJunction": {
+      "junc_closure_rt": 0.2857142857142857,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 7,
+      "junction_hotspot_score": 14.286
+    },
+    "BiryandCircle": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 4,
+      "junction_hotspot_score": 50.0
+    },
+    "BloodBankCircle": {
+      "junc_closure_rt": 0.13333333333333333,
+      "junc_highprio_rt": 0.26666666666666666,
+      "junc_total": 15,
+      "junction_hotspot_score": 20.0
+    },
+    "Bommanahalli": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 26,
+      "junction_hotspot_score": 50.0
+    },
+    "BrigadeMillenium": {
+      "junc_closure_rt": 1.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 50.0
+    },
+    "BucheryJunction": {
+      "junc_closure_rt": 0.09090909090909091,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 11,
+      "junction_hotspot_score": 4.545
+    },
+    "CID-CarltonHouseJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 9,
+      "junction_hotspot_score": 0.0
+    },
+    "CIL CrossJunction-JayamahalRd": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 4,
+      "junction_hotspot_score": 0.0
+    },
+    "CMH Rd-AdarshTheaterJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 5,
+      "junction_hotspot_score": 50.0
+    },
+    "CMP GateJunc": {
+      "junc_closure_rt": 0.15,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 20,
+      "junction_hotspot_score": 57.5
+    },
+    "CashPharmacyJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 3,
+      "junction_hotspot_score": 50.0
+    },
+    "ChandraLayoutJunc-nearWaterTank": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 2,
+      "junction_hotspot_score": 50.0
+    },
+    "ChandrikaJunction": {
+      "junc_closure_rt": 0.5,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 2,
+      "junction_hotspot_score": 25.0
+    },
+    "ChaudrayaCircle/UdayaTVCircle(CantonmentJunc)": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 7,
+      "junction_hotspot_score": 0.0
+    },
+    "Chokasandra (Tumkur road)": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 14,
+      "junction_hotspot_score": 50.0
+    },
+    "CholurpalyaJunction(MagadiRd)": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 2,
+      "junction_hotspot_score": 50.0
+    },
+    "CoffeeBoardJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 8,
+      "junction_hotspot_score": 50.0
+    },
+    "ColesParkJunc": {
+      "junc_closure_rt": 1.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 50.0
+    },
+    "CommandoHospitalJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 6,
+      "junction_hotspot_score": 0.0
+    },
+    "D'SouzaCircle": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 4,
+      "junction_hotspot_score": 0.0
+    },
+    "DMRoadJunc(Basavangudi)": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 0.0
+    },
+    "DairyCircle": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.8,
+      "junc_total": 5,
+      "junction_hotspot_score": 40.0
+    },
+    "Delmia-Jayanagar": {
+      "junc_closure_rt": 0.3333333333333333,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 3,
+      "junction_hotspot_score": 66.667
+    },
+    "Devanahalli new bus stand": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 0.0
+    },
+    "DevanahalliCrossJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 2,
+      "junction_hotspot_score": 0.0
+    },
+    "DevangaHostelJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.4,
+      "junc_total": 5,
+      "junction_hotspot_score": 20.0
+    },
+    "Devasandra(k r puram)": {
+      "junc_closure_rt": 0.13333333333333333,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 30,
+      "junction_hotspot_score": 6.667
+    },
+    "DevegowdaPetrolBunkJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 2,
+      "junction_hotspot_score": 50.0
+    },
+    "Deverabeesanahalli-ORR Junc": {
+      "junc_closure_rt": 0.06666666666666667,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 15,
+      "junction_hotspot_score": 53.333
+    },
+    "DhobiGhatJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 7,
+      "junction_hotspot_score": 50.0
+    },
+    "DickensonRd-AdigasJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 0.0
+    },
+    "DoddaballapuraCrossJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 3,
+      "junction_hotspot_score": 0.0
+    },
+    "DomlurWaterTank": {
+      "junc_closure_rt": 0.16666666666666666,
+      "junc_highprio_rt": 0.6666666666666666,
+      "junc_total": 12,
+      "junction_hotspot_score": 41.667
+    },
+    "Dr RajkumarRd-10thCrossRdJunc": {
+      "junc_closure_rt": 0.2,
+      "junc_highprio_rt": 0.4,
+      "junc_total": 5,
+      "junction_hotspot_score": 30.0
+    },
+    "Dr TCM RoyanRd near AmbedkarStatue": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.7272727272727273,
+      "junc_total": 11,
+      "junction_hotspot_score": 36.364
+    },
+    "ESI(k r puram)": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 0.0
+    },
+    "ElectronicCityGate-2Junc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 6,
+      "junction_hotspot_score": 0.0
+    },
+    "EliteJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 6,
+      "junction_hotspot_score": 0.0
+    },
+    "FTI Junction(KanteeravaStudio)": {
+      "junc_closure_rt": 0.09090909090909091,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 11,
+      "junction_hotspot_score": 4.545
+    },
+    "Fire Force Junction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 2,
+      "junction_hotspot_score": 50.0
+    },
+    "GangammagudiJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 6,
+      "junction_hotspot_score": 0.0
+    },
+    "GarebhavipalyaJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 5,
+      "junction_hotspot_score": 50.0
+    },
+    "Geeta Circle": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 0.0
+    },
+    "Geethanjali jn": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 2,
+      "junction_hotspot_score": 0.0
+    },
+    "GokuldasImagesJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 28,
+      "junction_hotspot_score": 50.0
+    },
+    "GopalGowdaJUnc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 3,
+      "junction_hotspot_score": 0.0
+    },
+    "GorappanapalyaJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 50.0
+    },
+    "GoruguntepalyaJunc": {
+      "junc_closure_rt": 0.05,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 20,
+      "junction_hotspot_score": 52.5
+    },
+    "GovindapuraCross": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 0.0
+    },
+    "GowdanapalyaJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 0.0
+    },
+    "HSR14thMainJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.6666666666666666,
+      "junc_total": 3,
+      "junction_hotspot_score": 33.333
+    },
+    "HainsJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 6,
+      "junction_hotspot_score": 0.0
+    },
+    "HalliThindi": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 3,
+      "junction_hotspot_score": 0.0
+    },
+    "HebbalFlyoverJunc": {
+      "junc_closure_rt": 0.14285714285714285,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 28,
+      "junction_hotspot_score": 57.143
+    },
+    "HennurRd-DavisRdJunction": {
+      "junc_closure_rt": 0.5,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 2,
+      "junction_hotspot_score": 75.0
+    },
+    "HennurRoad-ORR Junc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 17,
+      "junction_hotspot_score": 50.0
+    },
+    "HesaraghattaJunction": {
+      "junc_closure_rt": 0.03333333333333333,
+      "junc_highprio_rt": 0.9333333333333333,
+      "junc_total": 30,
+      "junction_hotspot_score": 48.333
+    },
+    "HoodiJunction": {
+      "junc_closure_rt": 0.5,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 6,
+      "junction_hotspot_score": 25.0
+    },
+    "HopefarmJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 10,
+      "junction_hotspot_score": 0.0
+    },
+    "HoramavuJunction": {
+      "junc_closure_rt": 0.16666666666666666,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 12,
+      "junction_hotspot_score": 58.333
+    },
+    "HosmatJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 3,
+      "junction_hotspot_score": 0.0
+    },
+    "HudsonCircle": {
+      "junc_closure_rt": 0.13333333333333333,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 15,
+      "junction_hotspot_score": 56.667
+    },
+    "HulimaveRd-BanneraghattaRdJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 9,
+      "junction_hotspot_score": 50.0
+    },
+    "HunsemarammanahalliJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 7,
+      "junction_hotspot_score": 50.0
+    },
+    "ISRO Junction-Airport rd": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 9,
+      "junction_hotspot_score": 50.0
+    },
+    "ISRO Junction-NewBEL Rd": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 0.0
+    },
+    "IbblurJunction'": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 13,
+      "junction_hotspot_score": 50.0
+    },
+    "IndianExpressJunction": {
+      "junc_closure_rt": 0.0625,
+      "junc_highprio_rt": 0.875,
+      "junc_total": 16,
+      "junction_hotspot_score": 46.875
+    },
+    "Indiranasgar13thMainJunc": {
+      "junc_closure_rt": 0.5,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 2,
+      "junction_hotspot_score": 75.0
+    },
+    "ItmaduJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 6,
+      "junction_hotspot_score": 50.0
+    },
+    "J D MaraJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 3,
+      "junction_hotspot_score": 50.0
+    },
+    "JP Nagar 15th cross junction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 7,
+      "junction_hotspot_score": 50.0
+    },
+    "JP Nagar 9th cross-24th main jn": {
+      "junc_closure_rt": 0.2,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 5,
+      "junction_hotspot_score": 10.0
+    },
+    "JaiMuniRaoCircle": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 5,
+      "junction_hotspot_score": 50.0
+    },
+    "Jaipuria-Adugodi": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 4,
+      "junction_hotspot_score": 50.0
+    },
+    "JakkurCrossJunction": {
+      "junc_closure_rt": 0.05555555555555555,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 18,
+      "junction_hotspot_score": 52.778
+    },
+    "JalahalliCross(SM Circle)": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 32,
+      "junction_hotspot_score": 50.0
+    },
+    "JayadevaHospitalJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 8,
+      "junction_hotspot_score": 50.0
+    },
+    "Jayanagar 4th main,36th cross": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 2,
+      "junction_hotspot_score": 0.0
+    },
+    "JohnsonMarket": {
+      "junc_closure_rt": 0.3333333333333333,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 3,
+      "junction_hotspot_score": 66.667
+    },
+    "K G Junction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 0.0
+    },
+    "K H Road-SiddaiahRdJunc(BMTC-BigBazaar)": {
+      "junc_closure_rt": 0.3333333333333333,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 6,
+      "junction_hotspot_score": 16.667
+    },
+    "K R Circle": {
+      "junc_closure_rt": 0.26666666666666666,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 30,
+      "junction_hotspot_score": 13.333
+    },
+    "K R MarketJunction": {
+      "junc_closure_rt": 0.42857142857142855,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 7,
+      "junction_hotspot_score": 71.429
+    },
+    "KCG HospitalJunction": {
+      "junc_closure_rt": 0.5,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 2,
+      "junction_hotspot_score": 25.0
+    },
+    "KHB Junction": {
+      "junc_closure_rt": 1.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 100.0
+    },
+    "KIMCO Junction": {
+      "junc_closure_rt": 0.06451612903225806,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 31,
+      "junction_hotspot_score": 53.226
+    },
+    "KR Road-14thCross Junc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 0.0
+    },
+    "KadirenahalliJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 8,
+      "junction_hotspot_score": 50.0
+    },
+    "Kadubeesanahalli-ORR Junc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.9166666666666666,
+      "junc_total": 12,
+      "junction_hotspot_score": 45.833
+    },
+    "KalyanNagar-ORR Junc": {
+      "junc_closure_rt": 0.16666666666666666,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 6,
+      "junction_hotspot_score": 58.333
+    },
+    "KamakyaJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 50.0
+    },
+    "Kammanahalli-RingRoadJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 4,
+      "junction_hotspot_score": 50.0
+    },
+    "KamrajRdJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 5,
+      "junction_hotspot_score": 50.0
+    },
+    "KanakapuraRd-RingRdJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.75,
+      "junc_total": 8,
+      "junction_hotspot_score": 37.5
+    },
+    "KarnatakaBhavanJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 8,
+      "junction_hotspot_score": 0.0
+    },
+    "KatriguppeJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 12,
+      "junction_hotspot_score": 50.0
+    },
+    "KensingtonOvalJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 0.0
+    },
+    "KhodaysCircle(DV UrsCircle)": {
+      "junc_closure_rt": 0.043478260869565216,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 23,
+      "junction_hotspot_score": 2.174
+    },
+    "KodigehalliCross": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.9090909090909091,
+      "junc_total": 11,
+      "junction_hotspot_score": 45.455
+    },
+    "KogilluCrossJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 15,
+      "junction_hotspot_score": 50.0
+    },
+    "KonanakunteJunction(KanakapurarRd)": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 6,
+      "junction_hotspot_score": 0.0
+    },
+    "KoramangalaWaterTankJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 29,
+      "junction_hotspot_score": 50.0
+    },
+    "KrishnaFlourMill": {
+      "junc_closure_rt": 0.23529411764705882,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 17,
+      "junction_hotspot_score": 11.765
+    },
+    "Krupanidhi College": {
+      "junc_closure_rt": 0.2,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 5,
+      "junction_hotspot_score": 10.0
+    },
+    "Kudlu Gate Junc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 6,
+      "junction_hotspot_score": 50.0
+    },
+    "KundanahalliGateJunc": {
+      "junc_closure_rt": 0.1,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 10,
+      "junction_hotspot_score": 55.0
+    },
+    "KuvempuCircle": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 3,
+      "junction_hotspot_score": 50.0
+    },
+    "KuvempuCircleJunc,HAL MainGate": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 50.0
+    },
+    "LRDE Junction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 9,
+      "junction_hotspot_score": 50.0
+    },
+    "LalbaghMainGateJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 6,
+      "junction_hotspot_score": 0.0
+    },
+    "LalbaghWestGate": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 0.0
+    },
+    "LeprosyhospitalJunc": {
+      "junc_closure_rt": 0.15,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 20,
+      "junction_hotspot_score": 57.5
+    },
+    "LinkRoadMalleswaramJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 3,
+      "junction_hotspot_score": 0.0
+    },
+    "LowerAgaram(IndiaGarage)Junc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 3,
+      "junction_hotspot_score": 0.0
+    },
+    "MC Circle": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 6,
+      "junction_hotspot_score": 50.0
+    },
+    "MICO Bande": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 6,
+      "junction_hotspot_score": 0.0
+    },
+    "MS RamaiahJunc(TollGate)": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 11,
+      "junction_hotspot_score": 50.0
+    },
+    "MSRamaiahHospitalJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 0.0
+    },
+    "MahalaxmiLayoutEntranceJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.8,
+      "junc_total": 5,
+      "junction_hotspot_score": 40.0
+    },
+    "MaharajaJunction": {
+      "junc_closure_rt": 0.5,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 2,
+      "junction_hotspot_score": 25.0
+    },
+    "Malleswaram18thCrossRd-SampigeRdJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 5,
+      "junction_hotspot_score": 0.0
+    },
+    "ManipalCentreJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 2,
+      "junction_hotspot_score": 50.0
+    },
+    "MaratahalliBridgeJunc": {
+      "junc_closure_rt": 0.125,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 16,
+      "junction_hotspot_score": 56.25
+    },
+    "MarenahalliRd-18thMainRdJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 2,
+      "junction_hotspot_score": 0.0
+    },
+    "MargosaRd-18thCrossJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 6,
+      "junction_hotspot_score": 0.0
+    },
+    "Marigowda-TavarkereRdJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.38461538461538464,
+      "junc_total": 13,
+      "junction_hotspot_score": 19.231
+    },
+    "MayohallJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 5,
+      "junction_hotspot_score": 50.0
+    },
+    "MeenakshiMallJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 8,
+      "junction_hotspot_score": 50.0
+    },
+    "MekhriCircle": {
+      "junc_closure_rt": 0.015625,
+      "junc_highprio_rt": 0.984375,
+      "junc_total": 64,
+      "junction_hotspot_score": 50.0
+    },
+    "MillCornerRd-SampigeRdJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 9,
+      "junction_hotspot_score": 0.0
+    },
+    "Minerva Circle": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 2,
+      "junction_hotspot_score": 0.0
+    },
+    "MinskSquare(CTO Junction)": {
+      "junc_closure_rt": 0.125,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 8,
+      "junction_hotspot_score": 56.25
+    },
+    "MintoJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 5,
+      "junction_hotspot_score": 0.0
+    },
+    "ModiBridgeJunction": {
+      "junc_closure_rt": 0.3333333333333333,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 3,
+      "junction_hotspot_score": 66.667
+    },
+    "ModiHospital": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 50.0
+    },
+    "MotherTeressaCircle": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.9090909090909091,
+      "junc_total": 11,
+      "junction_hotspot_score": 45.455
+    },
+    "MysoreRd--MadhuPetrolBunkJunction": {
+      "junc_closure_rt": 0.75,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 4,
+      "junction_hotspot_score": 87.5
+    },
+    "MysoreRd-RingRdJunc(Nayandanahallii)": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 18,
+      "junction_hotspot_score": 50.0
+    },
+    "N R SquareJunc": {
+      "junc_closure_rt": 0.1,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 10,
+      "junction_hotspot_score": 55.0
+    },
+    "NCERT Junction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 50.0
+    },
+    "NGV RearGateJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 2,
+      "junction_hotspot_score": 0.0
+    },
+    "NIMHANS Junction": {
+      "junc_closure_rt": 0.16666666666666666,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 6,
+      "junction_hotspot_score": 8.333
+    },
+    "NTTF JunctionPeenya": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 2,
+      "junction_hotspot_score": 0.0
+    },
+    "NagaTheaterJunc-Ulsoor": {
+      "junc_closure_rt": 1.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 50.0
+    },
+    "NaganathapuraJunction": {
+      "junc_closure_rt": 0.08333333333333333,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 12,
+      "junction_hotspot_score": 54.167
+    },
+    "Nagarbhavi": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 9,
+      "junction_hotspot_score": 0.0
+    },
+    "Nagavara-ORR Junction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 30,
+      "junction_hotspot_score": 50.0
+    },
+    "NandiCross(RaniCross)": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 3,
+      "junction_hotspot_score": 0.0
+    },
+    "Narayanapura cross, Hegde nagar": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 3,
+      "junction_hotspot_score": 50.0
+    },
+    "NationalCollege": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 0.0
+    },
+    "NavarangBarJunc-Dr RajkumarRd": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 0.0
+    },
+    "NavarangTheatreJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 3,
+      "junction_hotspot_score": 50.0
+    },
+    "OldMadrasRd-80FeetRdJunc": {
+      "junc_closure_rt": 0.125,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 8,
+      "junction_hotspot_score": 56.25
+    },
+    "OldMadrasRd-BMTC DepotJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 50.0
+    },
+    "OldMadrasRd-DoubleRdJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 3,
+      "junction_hotspot_score": 50.0
+    },
+    "OldMadrasRd-Indranagar100ftRdJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 12,
+      "junction_hotspot_score": 50.0
+    },
+    "OldMadrasRd-NGEF Junc": {
+      "junc_closure_rt": 0.125,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 8,
+      "junction_hotspot_score": 56.25
+    },
+    "OldMadrasRd-SuddaguntepalyaRdJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 3,
+      "junction_hotspot_score": 50.0
+    },
+    "OldPoliceStation-Ashoknagar": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 5,
+      "junction_hotspot_score": 50.0
+    },
+    "OperaHouseJunc": {
+      "junc_closure_rt": 0.16666666666666666,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 6,
+      "junction_hotspot_score": 58.333
+    },
+    "PES-DevegowdaCircle": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 4,
+      "junction_hotspot_score": 50.0
+    },
+    "Peenya14thCrossJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 0.0
+    },
+    "Peenya2ndStageBusStand": {
+      "junc_closure_rt": 0.5,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 2,
+      "junction_hotspot_score": 25.0
+    },
+    "PeenyaPoliceStation": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 12,
+      "junction_hotspot_score": 50.0
+    },
+    "PlatformRdJunction": {
+      "junc_closure_rt": 0.2,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 5,
+      "junction_hotspot_score": 10.0
+    },
+    "PoliceCornerJunc": {
+      "junc_closure_rt": 0.15384615384615385,
+      "junc_highprio_rt": 0.8846153846153846,
+      "junc_total": 26,
+      "junction_hotspot_score": 51.923
+    },
+    "PoliceTimmaiahCircle(GPO)": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 14,
+      "junction_hotspot_score": 50.0
+    },
+    "PotteryCircle": {
+      "junc_closure_rt": 0.2,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 5,
+      "junction_hotspot_score": 10.0
+    },
+    "PrasannaJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 6,
+      "junction_hotspot_score": 50.0
+    },
+    "PriyadarshiniHotel,Jayamahal,RT Nagar": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 5,
+      "junction_hotspot_score": 0.0
+    },
+    "PurnimaTheaterJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 7,
+      "junction_hotspot_score": 0.0
+    },
+    "PuttammaChoultryNagarbhavi": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.5,
+      "junc_total": 2,
+      "junction_hotspot_score": 25.0
+    },
+    "QueensStatueCircle": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 7,
+      "junction_hotspot_score": 50.0
+    },
+    "RRR(Okalipuram)Junction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 6,
+      "junction_hotspot_score": 0.0
+    },
+    "Rajajinagagr1stBlockJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 2,
+      "junction_hotspot_score": 50.0
+    },
+    "Rajajinagar19thMainJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 6,
+      "junction_hotspot_score": 50.0
+    },
+    "RajajinagarEntranceJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 5,
+      "junction_hotspot_score": 0.0
+    },
+    "RajarajeshwariKalyanaMantapaJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 50.0
+    },
+    "RajeshwariJunc": {
+      "junc_closure_rt": 0.18181818181818182,
+      "junc_highprio_rt": 0.9090909090909091,
+      "junc_total": 22,
+      "junction_hotspot_score": 54.545
+    },
+    "RamaiahCircle-UlsoorPoliceStation": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 9,
+      "junction_hotspot_score": 50.0
+    },
+    "RamamurthyNagarJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 9,
+      "junction_hotspot_score": 50.0
+    },
+    "Richmond circle jn": {
+      "junc_closure_rt": 0.3333333333333333,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 9,
+      "junction_hotspot_score": 66.667
+    },
+    "Ring road-Near Kengunte Junction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 7,
+      "junction_hotspot_score": 0.0
+    },
+    "RingRoad-UllalJunction": {
+      "junc_closure_rt": 0.14285714285714285,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 7,
+      "junction_hotspot_score": 7.143
+    },
+    "RoyanCircle-Chamrajpete": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 50.0
+    },
+    "SRS Peenya Junc": {
+      "junc_closure_rt": 0.05,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 20,
+      "junction_hotspot_score": 52.5
+    },
+    "SadahalliGateJunc(AirportRd)": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 7,
+      "junction_hotspot_score": 50.0
+    },
+    "SadashivnagarJunc": {
+      "junc_closure_rt": 0.38461538461538464,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 13,
+      "junction_hotspot_score": 19.231
+    },
+    "SafinaPlazaJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 50.0
+    },
+    "SagarHospitalJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 5,
+      "junction_hotspot_score": 50.0
+    },
+    "SagarTheatreJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 5,
+      "junction_hotspot_score": 0.0
+    },
+    "SandeepUnnikrishnan-Yelhanka": {
+      "junc_closure_rt": 0.125,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 8,
+      "junction_hotspot_score": 6.25
+    },
+    "SantheCircle": {
+      "junc_closure_rt": 0.2,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 25,
+      "junction_hotspot_score": 60.0
+    },
+    "SarjapurRd-St JohnsRdJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 10,
+      "junction_hotspot_score": 50.0
+    },
+    "SatteliteBusStandJunc": {
+      "junc_closure_rt": 0.023255813953488372,
+      "junc_highprio_rt": 0.9767441860465116,
+      "junc_total": 43,
+      "junction_hotspot_score": 50.0
+    },
+    "ShankarMuttCircle": {
+      "junc_closure_rt": 0.3333333333333333,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 3,
+      "junction_hotspot_score": 16.667
+    },
+    "ShantalaJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 15,
+      "junction_hotspot_score": 0.0
+    },
+    "ShivajiTalkiesJunc": {
+      "junc_closure_rt": 0.14285714285714285,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 7,
+      "junction_hotspot_score": 57.143
+    },
+    "Shivajinagar(BRV)Junction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.875,
+      "junc_total": 16,
+      "junction_hotspot_score": 43.75
+    },
+    "ShivanahalliJunctionWOC": {
+      "junc_closure_rt": 0.3333333333333333,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 3,
+      "junction_hotspot_score": 66.667
+    },
+    "ShivandaCircle": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 12,
+      "junction_hotspot_score": 0.0
+    },
+    "Shivashankara circle": {
+      "junc_closure_rt": 0.2,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 5,
+      "junction_hotspot_score": 10.0
+    },
+    "SiddalingaiahCircle": {
+      "junc_closure_rt": 0.1,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 10,
+      "junction_hotspot_score": 55.0
+    },
+    "SiddapuraJunction": {
+      "junc_closure_rt": 0.4,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 5,
+      "junction_hotspot_score": 20.0
+    },
+    "SilkBoardJunc": {
+      "junc_closure_rt": 0.12121212121212122,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 33,
+      "junction_hotspot_score": 56.061
+    },
+    "SindhiColonyJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 9,
+      "junction_hotspot_score": 0.0
+    },
+    "SirsiCircle": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 9,
+      "junction_hotspot_score": 50.0
+    },
+    "SonyworldJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 3,
+      "junction_hotspot_score": 50.0
+    },
+    "South end circle": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 3,
+      "junction_hotspot_score": 0.0
+    },
+    "Srigandakaval": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 14,
+      "junction_hotspot_score": 50.0
+    },
+    "Srinivagilu(Ejipura)Junc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 4,
+      "junction_hotspot_score": 50.0
+    },
+    "StateBankofMysoreJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 12,
+      "junction_hotspot_score": 0.0
+    },
+    "SubbannaJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 7,
+      "junction_hotspot_score": 0.0
+    },
+    "SubedarChatramRd near SheshadripuramPS": {
+      "junc_closure_rt": 0.3333333333333333,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 6,
+      "junction_hotspot_score": 16.667
+    },
+    "Sumanhalli": {
+      "junc_closure_rt": 0.0625,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 16,
+      "junction_hotspot_score": 53.125
+    },
+    "SwagathMainRd-EastEndRdJunc": {
+      "junc_closure_rt": 0.5,
+      "junc_highprio_rt": 0.5,
+      "junc_total": 2,
+      "junction_hotspot_score": 50.0
+    },
+    "TC Palya-OM RoadJunc": {
+      "junc_closure_rt": 0.25,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 4,
+      "junction_hotspot_score": 12.5
+    },
+    "TVS CrossJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 0.0
+    },
+    "TamarikannanJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 50.0
+    },
+    "TataInstituteCircle": {
+      "junc_closure_rt": 0.16666666666666666,
+      "junc_highprio_rt": 0.9166666666666666,
+      "junc_total": 12,
+      "junction_hotspot_score": 54.167
+    },
+    "ThomasCafe-New": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 0.0
+    },
+    "TownhallJunction": {
+      "junc_closure_rt": 0.06666666666666667,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 30,
+      "junction_hotspot_score": 53.333
+    },
+    "Trilight Circle,Race course Road": {
+      "junc_closure_rt": 1.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 50.0
+    },
+    "TrinityCircle": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 11,
+      "junction_hotspot_score": 50.0
+    },
+    "TumkurRdMarappanapalyaJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.8571428571428571,
+      "junc_total": 14,
+      "junction_hotspot_score": 42.857
+    },
+    "TyagiHengalvarayaJunc(DickensonRd)": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 5,
+      "junction_hotspot_score": 50.0
+    },
+    "UCO Bank(Forum)": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 2,
+      "junction_hotspot_score": 50.0
+    },
+    "UlsoorGateJunc": {
+      "junc_closure_rt": 0.16666666666666666,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 12,
+      "junction_hotspot_score": 58.333
+    },
+    "UniversityJunc(Janabharti)": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 8,
+      "junction_hotspot_score": 50.0
+    },
+    "UpparpetJunction": {
+      "junc_closure_rt": 1.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 50.0
+    },
+    "UrvashiJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 6,
+      "junction_hotspot_score": 0.0
+    },
+    "UttarahalliJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 14,
+      "junction_hotspot_score": 0.0
+    },
+    "VeerannapalyaJunction(BEL,HO)": {
+      "junc_closure_rt": 0.23333333333333334,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 30,
+      "junction_hotspot_score": 61.667
+    },
+    "VeerasandraGateJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 11,
+      "junction_hotspot_score": 0.0
+    },
+    "VetenaryHospitalJunc-Shivajinagar": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 4,
+      "junction_hotspot_score": 0.0
+    },
+    "VijayanagarBusStandJunction": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 6,
+      "junction_hotspot_score": 50.0
+    },
+    "WebbsCircle": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 3,
+      "junction_hotspot_score": 50.0
+    },
+    "WilsonGarden10thCrossJunc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 6,
+      "junction_hotspot_score": 0.0
+    },
+    "WilsonGarden12thCrossJunc": {
+      "junc_closure_rt": 0.125,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 8,
+      "junction_hotspot_score": 6.25
+    },
+    "WiproJunc-Koramangala": {
+      "junc_closure_rt": 1.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 50.0
+    },
+    "YediyurMeternityHospital": {
+      "junc_closure_rt": 1.0,
+      "junc_highprio_rt": 0.0,
+      "junc_total": 1,
+      "junction_hotspot_score": 50.0
+    },
+    "YelhankaBypass": {
+      "junc_closure_rt": 0.05263157894736842,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 19,
+      "junction_hotspot_score": 52.632
+    },
+    "YelhankaCircle": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 0.9117647058823529,
+      "junc_total": 34,
+      "junction_hotspot_score": 45.588
+    },
+    "Yemalur cross junc": {
+      "junc_closure_rt": 0.0,
+      "junc_highprio_rt": 1.0,
+      "junc_total": 4,
+      "junction_hotspot_score": 50.0
+    },
+    "YeshwanthpuraCircle": {
+      "junc_closure_rt": 0.02631578947368421,
+      "junc_highprio_rt": 0.9473684210526315,
+      "junc_total": 38,
+      "junction_hotspot_score": 48.684
+    },
+    "toll gate mysore road": {
+      "junc_closure_rt": 0.06060606060606061,
+      "junc_highprio_rt": 0.9696969696969697,
+      "junc_total": 33,
+      "junction_hotspot_score": 51.515
+    }
+  },
+  "defaults": {
+    "cause_closure_rate_hist": 0.0463932107496463,
+    "cause_pot_holes": 0.0,
+    "corr_closure_rt": 0.0836734693877551,
+    "corr_high_prio_rt": 0.9959183673469388,
+    "corridor_fragility": 42.1,
+    "corridor_fragility_norm": 90.72,
+    "corridor_te_priori": 0.9893880781009315,
+    "corridor_te_requir": 0.0757209096178359,
+    "days_since_start": 53.094149826388886,
+    "dow_cos": -0.2225209339563143,
+    "dow_ord": 3.0,
+    "dow_sin": 0.0,
+    "event_type_enc": 0.0,
+    "hour_cos": 6.123233995736766e-17,
+    "hour_sin": 0.4999999999999999,
+    "interaction_corr_cause_closure": 0.0039,
+    "interaction_ps_cause": 0.0,
+    "junc_closure_rt": 0.015625,
+    "junc_highprio_rt": 1.0,
+    "junc_total": 0.0,
+    "junction_hotspot_score": 50.0,
+    "month_num": 2.0,
+    "police_station_te_priori": 0.7343792862119565,
+    "police_station_te_requir": 0.056561177731406,
+    "ps_closure_rt": 0.057471264367816,
+    "ps_highprio_rt": 0.7272727272727273,
+    "ps_hotspot_score": 47.273,
+    "ps_med_res": 0.8770991448611112,
+    "veh_closure_rt": 0.0402476780185758,
+    "veh_risk_score": 32.469,
+    "zone_closure_rt": 0.0564705882352941,
+    "zone_risk_score": 39.972
+  },
+  "cause_impact_rank": {
+    "vip_movement": 5,
+    "public_event": 4,
+    "procession": 4,
+    "protest": 3,
+    "construction": 3,
+    "congestion": 2,
+    "accident": 2,
+    "tree_fall": 1,
+    "water_logging": 1,
+    "pot_holes": 1,
+    "road_conditions": 1,
+    "vehicle_breakdown": 0,
+    "others": 0,
+    "debris": 0,
+    "test_demo": 0,
+    "fog": 0
+  },
+  "corr_zone": {
+    "Airport New South Road": "North Zone 1",
+    "Bannerghata Road": "South Zone 2",
+    "Bellary Road 1": "North Zone 2",
+    "Bellary Road 2": "North Zone 2",
+    "CBD 1": "Central Zone 2",
+    "CBD 2": "Central Zone 2",
+    "Hennur Main Road": "North Zone 1",
+    "Hosur Road": "South Zone 2",
+    "IRR(Thanisandra road)": "South Zone 2",
+    "Magadi Road": "West Zone 1",
+    "Mysore Road": "Central Zone 2",
+    "Non-corridor": "Central Zone 2",
+    "ORR East 1": "East Zone 1",
+    "ORR East 2": "East Zone 1",
+    "ORR North 1": "North Zone 1",
+    "ORR North 2": "North Zone 2",
+    "ORR West 1": "South Zone 1",
+    "Old Airport Road": "Central Zone 1",
+    "Old Madras Road": "Central Zone 1",
+    "Tumkur Road": "West Zone 1",
+    "Varthur Road": "East Zone 1",
+    "West of Chord Road": "West Zone 2"
+  },
+  "corr_coords": {
+    "Airport New South Road": {
+      "lat": 13.0293,
+      "lon": 77.6346
+    },
+    "Bannerghata Road": {
+      "lat": 12.8906,
+      "lon": 77.5969
+    },
+    "Bellary Road 1": {
+      "lat": 13.0184,
+      "lon": 77.5865
+    },
+    "Bellary Road 2": {
+      "lat": 13.1059,
+      "lon": 77.6033
+    },
+    "CBD 1": {
+      "lat": 12.9809,
+      "lon": 77.6065
+    },
+    "CBD 2": {
+      "lat": 12.984,
+      "lon": 77.5944
+    },
+    "Hennur Main Road": {
+      "lat": 13.0517,
+      "lon": 77.6261
+    },
+    "Hosur Road": {
+      "lat": 12.9165,
+      "lon": 77.6242
+    },
+    "IRR(Thanisandra road)": {
+      "lat": 12.9362,
+      "lon": 77.6261
+    },
+    "Magadi Road": {
+      "lat": 12.9848,
+      "lon": 77.5244
+    },
+    "Mysore Road": {
+      "lat": 12.9575,
+      "lon": 77.5629
+    },
+    "Non-corridor": {
+      "lat": 12.9819,
+      "lon": 77.6011
+    },
+    "ORR East 1": {
+      "lat": 12.9287,
+      "lon": 77.6686
+    },
+    "ORR East 2": {
+      "lat": 12.9762,
+      "lon": 77.6956
+    },
+    "ORR North 1": {
+      "lat": 13.0259,
+      "lon": 77.6355
+    },
+    "ORR North 2": {
+      "lat": 13.0413,
+      "lon": 77.5573
+    },
+    "ORR West 1": {
+      "lat": 12.9226,
+      "lon": 77.5567
+    },
+    "Old Airport Road": {
+      "lat": 12.9589,
+      "lon": 77.6602
+    },
+    "Old Madras Road": {
+      "lat": 12.9812,
+      "lon": 77.6298
+    },
+    "Tumkur Road": {
+      "lat": 13.0315,
+      "lon": 77.5333
+    },
+    "Varthur Road": {
+      "lat": 12.9564,
+      "lon": 77.7152
+    },
+    "West of Chord Road": {
+      "lat": 12.9808,
+      "lon": 77.5457
+    }
+  },
+  "t0": "2023-11-09T19:24:48.154000+00:00",
+  "global_medians": {
+    "junc_closure_rt": 0.07171799027552674,
+    "junc_highprio_rt": 0.713128038897893,
+    "junction_hotspot_score": 0.3,
+    "junc_total": 0.0,
+    "zone_closure_rt": 0.06663025669033315,
+    "zone_risk_score": 34.44383761150555,
+    "ps_med_res": 0.8418611541666667
+  }
+}

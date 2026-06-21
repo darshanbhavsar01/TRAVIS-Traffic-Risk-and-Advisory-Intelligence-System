@@ -1,0 +1,82 @@
+{
+  "features": [
+    "cause_closure_rate_hist",
+    "cause_pot_holes",
+    "corr_closure_rt",
+    "corr_high_prio_rt",
+    "corridor_fragility",
+    "corridor_fragility_norm",
+    "corridor_te_priori",
+    "corridor_te_requir",
+    "days_since_start",
+    "dow_cos",
+    "dow_ord",
+    "dow_sin",
+    "event_type_enc",
+    "hour_cos",
+    "hour_sin",
+    "interaction_corr_cause_closure",
+    "interaction_ps_cause",
+    "junc_closure_rt",
+    "junc_highprio_rt",
+    "junc_total",
+    "junction_hotspot_score",
+    "month_num",
+    "police_station_te_priori",
+    "police_station_te_requir",
+    "ps_closure_rt",
+    "ps_highprio_rt",
+    "ps_hotspot_score",
+    "ps_med_res",
+    "veh_closure_rt",
+    "veh_risk_score",
+    "zone_closure_rt",
+    "zone_risk_score"
+  ],
+  "threshold_rc": 0.18,
+  "res_p95": 87.69,
+  "impact_weights": {
+    "road_closure": 55,
+    "cause_rank": 30,
+    "resolution": 15
+  },
+  "train_months": [
+    "2023-11",
+    "2023-12",
+    "2024-01",
+    "2024-02"
+  ],
+  "test_months": [
+    "2024-03",
+    "2024-04"
+  ],
+  "performance": {
+    "road_closure_auc": 0.717,
+    "road_closure_f1": 0.2356,
+    "priority_auc": 0.9995,
+    "resolution_mae_hrs": 17.09,
+    "resolution_r2": 0.0191
+  },
+  "impact_tier_thresholds": {
+    "low_max": 25,
+    "medium_max": 50,
+    "high_min": 50
+  },
+  "resource_rules": {
+    "HIGH": {
+      "constables": 16,
+      "barricades": 6,
+      "response_time_min": 15
+    },
+    "MEDIUM": {
+      "constables": 8,
+      "barricades": 3,
+      "response_time_min": 30
+    },
+    "LOW": {
+      "constables": 3,
+      "barricades": 1,
+      "response_time_min": 60
+    }
+  }
+}
