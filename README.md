@@ -101,3 +101,6 @@ phase4_app/
 - Construction — ORR North
 - Truck Breakdown — Tumkur Road
 - Procession — CBD
+
+**Demo video:** https://drive.google.com/drive/folders/1jlA7U9v0KQtlTb1xaUYEav873YX7OV0D?usp=sharing
+**Project PPT:** [TRAVIS_BridgeSense.pdf](TRAVIS_BridgeSense.pdf)
