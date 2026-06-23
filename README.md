@@ -1,13 +1,39 @@
 # TRAVIS — Traffic Risk & Advisory Intelligence System
 
-Event-driven traffic congestion prediction and advisory for Bangalore. TRAVIS forecasts
-road-closure risk, priority, and disruption duration for any event on the city's traffic
-network, then produces a deployment plan, an interactive Mappls map with live diversion
-routing, an AI-written advisory, and a one-click public bulletin.
+**Live App:** https://travis-traffic-risk-and-advisory-intelligence-system-6fy3zvxqh.streamlit.app/
 
 > **Architecture & flow diagrams:** see **[DIAGRAMS.md](DIAGRAMS.md)**.
 
-## Quick Start
+## Description
+
+Traffic disruption in Bangalore is rarely random — it is driven by events: VIP movements,
+rallies, construction, breakdowns, processions. TRAVIS turns those events into actionable
+foresight. Given an event (corridor, cause, time, location), it predicts **how likely a road
+closure is, how high-priority the response should be, and how long the disruption will last**,
+combining all three into a single 0–100 impact score.
+
+From that prediction it generates a complete operational picture:
+
+- A **resource deployment plan** (constables, barricades, target response time).
+- An **interactive Mappls map** with lane-level data, a live traffic layer, the impact radius,
+  the nearest police stations by road distance, and a **diversion route** (blocked road in red,
+  alternate in green) with side-by-side ETAs so commuters know whether to divert.
+- A **SHAP explanation** showing exactly which factors drove the prediction.
+- An **AI-written advisory** (Groq `llama-3.3-70b`) that phrases the model's output into a
+  plain-language briefing for a duty officer — strictly from model data, nothing invented.
+- A **one-click public traffic bulletin** (printable HTML/PDF) that authorities can post online
+  for the public to follow.
+
+The result bridges the gap between a machine-learning score and something an officer can act on
+and a citizen can read.
+
+## How to Run
+
+The fastest way to test TRAVIS is the **[live app](https://travis-traffic-risk-and-advisory-intelligence-system-6fy3zvxqh.streamlit.app/)** —
+no setup needed. Pick a preloaded scenario from the sidebar (or build your own) and click
+**Forecast Impact**.
+
+To run it locally:
 
 ```bash
 # 1. Install dependencies
