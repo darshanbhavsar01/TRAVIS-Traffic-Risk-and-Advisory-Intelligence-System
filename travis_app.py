@@ -143,6 +143,9 @@ T0         = pd.Timestamp(LOOKUP["t0"])
 MAPPLS_CLIENT_ID     = os.getenv("CLIENT_ID")
 MAPPLS_CLIENT_SECRET = os.getenv("CLIENT_SECRET")
 
+# Groq — used ONLY to phrase model-derived facts into natural language.
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+
 # Known coordinates for major Bangalore police stations
 PS_COORDS = {
     "Sadashivanagar":  {"lat": 13.0085, "lon": 77.5832},
@@ -194,6 +197,30 @@ def get_mappls_token():
         )
         if resp.status_code == 200:
             return resp.json().get("access_token", "")
+    except Exception:
+        pass
+    return ""
+
+
+@st.cache_data(ttl=900, show_spinner=False)
+def get_static_map_uri(token, lat, lon):
+    """Fetch a Mappls static map PNG and return it as a base64 data URI.
+
+    Used to embed a self-contained location snapshot in the printable bulletin.
+    Returns "" on any failure so the bulletin still renders without an image.
+    """
+    if not token:
+        return ""
+    import base64
+    url = (f"https://apis.mappls.com/advancedmaps/v1/{token}/still_image"
+           f"?center={lat},{lon}&zoom=14&size=640x300"
+           f"&markers={lat},{lon}&ssf=1")
+    try:
+        resp = requests.get(url, timeout=12)
+        ct = resp.headers.get("Content-Type", "")
+        if resp.status_code == 200 and ct.startswith("image"):
+            b64 = base64.b64encode(resp.content).decode("ascii")
+            return f"data:{ct};base64,{b64}"
     except Exception:
         pass
     return ""
@@ -519,7 +546,6 @@ html, body {{ width:100%; height:100%; background:#0f1117; }}
 <body>
 <div id="map"></div>
 <div id="map-error">
-  <div style="font-size:28px;">⚠️</div>
   <div>Mappls map unavailable</div>
   <div style="font-size:11px;color:#555;margin-top:4px;">Check API credentials or network connection</div>
 </div>
@@ -774,11 +800,205 @@ def get_shap_values(X):
         return None, None
 
 
+# Human-readable names for the truncated model feature columns.
+FEATURE_LABELS = {
+    "ps_closure_rt":            "police-station historical closure rate",
+    "police_station_te_requir": "police-station enforcement-required rate",
+    "police_station_te_priori": "police-station high-priority rate",
+    "corridor_te_requir":       "corridor enforcement-required rate",
+    "corridor_te_priori":       "corridor high-priority rate",
+    "corr_closure_rt":          "corridor historical closure rate",
+    "junc_closure_rt":          "junction historical closure rate",
+    "event_type_enc":           "event type (planned/unplanned)",
+    "cause_impact_rank":        "cause severity rank",
+    "hour_sin":                 "time of day",
+    "hour_cos":                 "time of day",
+    "dow":                      "day of week",
+    "is_weekend":               "weekend flag",
+    "days_since_start":         "season / days since dataset start",
+    "corridor_fragility_norm":  "corridor fragility index",
+    "interaction_corr_cause_closure": "corridor × cause closure interaction",
+    "interaction_ps_cause":     "police-station × cause interaction",
+}
+
+
+def shap_top_features(X, n=4):
+    """Return the top-n closure-risk drivers as plain dicts (model data only)."""
+    sv, _ = get_shap_values(X)
+    if sv is None:
+        return []
+    order = pd.Series(np.abs(sv)).sort_values(ascending=False).index[:n]
+    out = []
+    for i in order:
+        feat = FEATURES[i]
+        out.append({
+            "feature":   FEATURE_LABELS.get(feat, feat.replace("_", " ")),
+            "direction": "increases" if sv[i] > 0 else "reduces",
+            "magnitude": round(float(abs(sv[i])), 3),
+        })
+    return out
+
+
+@st.cache_data(ttl=900, show_spinner=False)
+def generate_advisory(facts_json):
+    """Phrase model-derived facts into a 3-sentence officer advisory via Groq.
+
+    STRICT: Groq receives only the JSON of model outputs / SHAP drivers /
+    nearest stations and is instructed to invent nothing. Returns None on any
+    failure so the UI can fall back to a template.
+    """
+    if not GROQ_API_KEY:
+        return None
+    facts = json.loads(facts_json)
+    system = (
+        "You are a traffic-control-room assistant for Bengaluru City Traffic Police. "
+        "You will receive a JSON object containing facts that come ENTIRELY from a "
+        "machine-learning model's output, its SHAP feature attributions, and a "
+        "nearest-police-station distance calculation. Write a concise traffic "
+        "advisory of EXACTLY three sentences for a duty officer. "
+        "STRICT RULES: (1) Use ONLY the numbers, names, times and entities present "
+        "in the JSON. (2) Do NOT invent or assume any street name, landmark, time, "
+        "count, distance, cause, or statistic that is not in the JSON. (3) Do not add "
+        "external knowledge or recommendations beyond what the data states. "
+        "(4) Sentence 1: the risk and why (corridor, cause, time, risk level, closure "
+        "probability). Sentence 2: deployment (constables, barricades, nearest station "
+        "and its distance). Sentence 3: the diversion / expected duration. "
+        "Output plain text only, exactly three sentences, no preamble, no bullet points."
+    )
+    user = "Facts (JSON):\n" + json.dumps(facts, indent=2)
+    try:
+        resp = requests.post(
+            "https://api.groq.com/openai/v1/chat/completions",
+            headers={
+                "Authorization": f"Bearer {GROQ_API_KEY}",
+                "Content-Type": "application/json",
+            },
+            json={
+                "model": "llama-3.3-70b-versatile",
+                "messages": [
+                    {"role": "system", "content": system},
+                    {"role": "user", "content": user},
+                ],
+                "temperature": 0.15,
+                "max_tokens": 260,
+            },
+            timeout=30,
+        )
+        if resp.status_code != 200:
+            return None
+        text = resp.json()["choices"][0]["message"]["content"].strip()
+        return text or None
+    except Exception:
+        return None
+
+
+def build_bulletin_html(facts, advisory_text):
+    """Build a self-contained printable public traffic bulletin (HTML → PDF).
+
+    Citizen-facing: authorities can post this online so commuters can follow it.
+    Uses only model-derived facts passed in `facts`.
+    """
+    f = facts
+    issued = datetime.now().strftime("%d %b %Y, %H:%M IST")
+    tier = f["risk_level"]
+    tier_color = {"HIGH": "#c0392b", "MEDIUM": "#b7791f", "LOW": "#1e7e34"}.get(tier, "#333")
+    junction_line = (f' near <b>{f["junction"]}</b>' if f.get("junction") else "")
+    stations = f.get("nearest_stations", [])
+    st_rows = "".join(
+        f'<tr><td style="padding:6px 10px;border-bottom:1px solid #eee;">{i+1}. {s["name"]} Police Station</td>'
+        f'<td style="padding:6px 10px;border-bottom:1px solid #eee;text-align:right;">{s["distance_km"]} km</td></tr>'
+        for i, s in enumerate(stations)
+    )
+    div = f.get("diversion", {})
+    div_block = ""
+    if div:
+        div_block = (
+            f'<div class="box"><div class="box-title">DIVERSION ADVISORY FOR COMMUTERS</div>'
+            f'<p style="margin:6px 0;">Travelling through this stretch now takes about '
+            f'<b style="color:#c0392b;">{div.get("blocked_min","-")} min</b> '
+            f'({div.get("blocked_km","-")} km). The recommended diversion takes about '
+            f'<b style="color:#1e7e34;">{div.get("divert_min","-")} min</b> '
+            f'({div.get("divert_km","-")} km).</p>'
+            f'<p style="margin:6px 0;font-weight:700;color:#1e7e34;">{div.get("recommendation","")}</p></div>'
+        )
+    # Optional static map image (embedded as base64 so the file is self-contained).
+    map_img = ""
+    if f.get("map_data_uri"):
+        map_img = (f'<div class="box"><div class="box-title">INCIDENT LOCATION</div>'
+                   f'<img src="{f["map_data_uri"]}" style="width:100%;border-radius:6px;" /></div>')
+
+    return f"""<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Traffic Advisory — {f["corridor"]}</title>
+<style>
+  @media print {{ @page {{ margin:14mm; }} }}
+  body {{ font-family: Arial, Helvetica, sans-serif; color:#1a1a1a; max-width:780px;
+          margin:0 auto; padding:24px; background:#fff; }}
+  .hdr {{ display:flex; align-items:center; gap:14px; border-bottom:3px solid {tier_color};
+          padding-bottom:14px; margin-bottom:18px; }}
+  .logo {{ font-size:34px; }}
+  .org {{ font-size:13px; color:#555; letter-spacing:0.05em; }}
+  .title {{ font-size:24px; font-weight:800; }}
+  .badge {{ margin-left:auto; background:{tier_color}; color:#fff; padding:8px 16px;
+            border-radius:6px; font-weight:800; font-size:15px; }}
+  .meta {{ font-size:13px; color:#555; margin-bottom:16px; }}
+  .lead {{ font-size:16px; line-height:1.6; background:#f7f7f9; border-left:4px solid {tier_color};
+           padding:14px 18px; border-radius:0 6px 6px 0; margin-bottom:18px; }}
+  .box {{ border:1px solid #e3e3e8; border-radius:8px; padding:14px 16px; margin-bottom:14px; }}
+  .box-title {{ font-size:11px; font-weight:800; letter-spacing:0.08em; color:{tier_color};
+                margin-bottom:8px; }}
+  table {{ width:100%; border-collapse:collapse; font-size:13px; }}
+  .grid {{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; text-align:center; }}
+  .stat {{ background:#f7f7f9; border-radius:8px; padding:12px; }}
+  .stat-v {{ font-size:24px; font-weight:800; color:{tier_color}; }}
+  .stat-l {{ font-size:11px; color:#666; }}
+  .foot {{ font-size:11px; color:#888; border-top:1px solid #e3e3e8; margin-top:18px;
+           padding-top:10px; }}
+</style></head>
+<body>
+  <div class="hdr">
+    <div class="logo">🚦</div>
+    <div>
+      <div class="org">TRAVIS ADVISORY</div>
+      <div class="title">Public Traffic Advisory</div>
+    </div>
+    <div class="badge">{tier} RISK</div>
+  </div>
+  <div class="meta">Issued: {issued} &nbsp;·&nbsp; Corridor: <b>{f["corridor"]}</b>{junction_line}
+       &nbsp;·&nbsp; Expected window: {f["day"]} around {f["hour"]}:00</div>
+  <div class="lead">{advisory_text}</div>
+  <div class="grid">
+    <div class="stat"><div class="stat-v">{f["p_closure_pct"]}%</div><div class="stat-l">Road-closure probability</div></div>
+    <div class="stat"><div class="stat-v">{f["impact_score"]}</div><div class="stat-l">Impact score / 100</div></div>
+    <div class="stat"><div class="stat-v">{f["expected_duration_hrs"]}h</div><div class="stat-l">Expected duration</div></div>
+  </div>
+  <div style="height:14px;"></div>
+  {map_img}
+  {div_block}
+  <div class="box">
+    <div class="box-title">DEPLOYMENT SUMMARY</div>
+    <div class="grid">
+      <div class="stat"><div class="stat-v">{f["constables"]}</div><div class="stat-l">Constables</div></div>
+      <div class="stat"><div class="stat-v">{f["barricades"]}</div><div class="stat-l">Barricade points</div></div>
+      <div class="stat"><div class="stat-v">{f["response_min"]}m</div><div class="stat-l">Target response</div></div>
+    </div>
+  </div>
+  <div class="box">
+    <div class="box-title">NEAREST DEPLOYMENT SOURCES (BY ROAD)</div>
+    <table>{st_rows}</table>
+  </div>
+  <div class="foot">
+    Generated by TRAVIS — Traffic Risk &amp; Advisory Intelligence System. Figures are
+    model predictions intended to support traffic planning. Cause: {f["cause"]} ({f["event_type"]}).
+    Follow on-ground police instructions. Powered by Mappls.
+  </div>
+</body></html>"""
+
+
 # ─────────────────────────────────────────────────────────────────────
 # PREDEFINED SCENARIOS
 # ─────────────────────────────────────────────────────────────────────
 SCENARIOS = {
-    "🔴 VIP Movement – Bellary Rd": {
+    "VIP Movement – Bellary Rd": {
         "event_cause": "vip_movement",
         "corridor": "Bellary Road 1",
         "police_station": "Sadashivanagar",
@@ -787,7 +1007,7 @@ SCENARIOS = {
         "event_type": "planned",
         "label": "VIP motorcade, Tuesday 9 AM",
     },
-    "🟠 Public Rally – Mysore Rd": {
+    "Public Rally – Mysore Rd": {
         "event_cause": "public_event",
         "corridor": "Mysore Road",
         "police_station": "Vijayanagara",
@@ -796,7 +1016,7 @@ SCENARIOS = {
         "event_type": "planned",
         "label": "Public rally, Friday 5 PM",
     },
-    "🟡 Construction – ORR North": {
+    "Construction – ORR North": {
         "event_cause": "construction",
         "corridor": "ORR North 1",
         "police_station": "Hebbala",
@@ -805,7 +1025,7 @@ SCENARIOS = {
         "event_type": "unplanned",
         "label": "Road work, Monday 8 AM",
     },
-    "⚪ Breakdown – Tumkur Rd": {
+    "Breakdown – Tumkur Rd": {
         "event_cause": "vehicle_breakdown",
         "corridor": "Tumkur Road",
         "police_station": "Peenya",
@@ -814,7 +1034,7 @@ SCENARIOS = {
         "event_type": "unplanned",
         "label": "Truck breakdown, Wednesday 2 PM",
     },
-    "🟠 Procession – CBD": {
+    "Procession – CBD": {
         "event_cause": "procession",
         "corridor": "CBD 2",
         "police_station": "Upparpet",
@@ -832,11 +1052,6 @@ CAUSE_OPTIONS = [
     "construction","congestion","accident","vehicle_breakdown",
     "tree_fall","water_logging","pot_holes","others",
 ]
-CAUSE_EMOJI = {
-    "vip_movement":"🚨","public_event":"🎪","procession":"🎭","protest":"✊",
-    "construction":"🚧","congestion":"🚗","accident":"💥","vehicle_breakdown":"🚛",
-    "tree_fall":"🌳","water_logging":"🌊","pot_holes":"🕳️","others":"❓",
-}
 
 # ─────────────────────────────────────────────────────────────────────
 # SESSION STATE
@@ -867,7 +1082,7 @@ st.markdown("""
 # SIDEBAR — INPUT FORM
 # ─────────────────────────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown("### 📋 Event Parameters")
+    st.markdown("### Event Parameters")
     st.markdown("---")
 
     # Quick scenarios
@@ -887,7 +1102,7 @@ with st.sidebar:
         "Event Type",
         options=CAUSE_OPTIONS,
         index=CAUSE_OPTIONS.index(sc.get("event_cause","public_event")),
-        format_func=lambda x: f"{CAUSE_EMOJI.get(x,'⚪')}  {x.replace('_',' ').title()}",
+        format_func=lambda x: x.replace('_',' ').title(),
     )
     sel_corridor = st.selectbox(
         "Corridor",
@@ -929,7 +1144,7 @@ with st.sidebar:
     )
 
     st.markdown("---")
-    predict_btn = st.button("🔮  Forecast Impact", width="stretch", type="primary")
+    predict_btn = st.button("Forecast Impact", width="stretch", type="primary")
 
 # ─────────────────────────────────────────────────────────────────────
 # RUN PREDICTION
@@ -958,7 +1173,6 @@ if res is None:
     # Landing state
     st.markdown("""
     <div class="travis-card" style="text-align:center; padding: 60px 40px;">
-      <div style="font-size:64px; margin-bottom:16px;">🗺️</div>
       <div style="font-size:20px; font-weight:700; color:#e8eaf0; margin-bottom:10px;">
         Select an event and click Forecast Impact
       </div>
@@ -993,7 +1207,7 @@ else:
     impact = res["impact"]
 
     TIER_COLOR = {"HIGH":"#ff6b6b","MEDIUM":"#ffd166","LOW":"#00d4aa"}
-    TIER_LABEL = {"HIGH":"🔴 HIGH RISK","MEDIUM":"🟡 MEDIUM RISK","LOW":"🟢 LOW RISK"}
+    TIER_LABEL = {"HIGH":"HIGH RISK","MEDIUM":"MEDIUM RISK","LOW":"LOW RISK"}
     tc = TIER_COLOR[tier]
 
     # ── ROW 1: Score gauge + 4 metrics ───────────────────────────────
@@ -1042,7 +1256,7 @@ else:
             (m1, "P(Road Closure)", f"{res['p_closure']:.1f}",  "%",  p_clos_color, "Probability closure required"),
             (m2, "P(High Priority)",f"{res['p_priority']:.1f}", "%",  p_pri_color,  "Probability high priority"),
             (m3, "Est. Duration",    f"{res['pred_hrs']:.1f}",  "hrs",  "#a8edea",  "Predicted resolution time"),
-            (m4, "Event Type",      sel_type.upper(),           "",   "#8b8fa8",    f"{CAUSE_EMOJI.get(sel_cause,'⚪')} {sel_cause.replace('_',' ').title()}"),
+            (m4, "Event Type",      sel_type.upper(),           "",   "#8b8fa8",    f"{sel_cause.replace('_',' ').title()}"),
         ]:
             mcol.markdown(f"""
             <div class="metric-card">
@@ -1084,15 +1298,11 @@ else:
          "lon": PS_COORDS[ps["name"]]["lon"], "dist": ps["distance_km"]}
         for ps in nearest_ps if ps["name"] in PS_COORDS
     ]
-    # Route: nearest police station → incident location.
-    # Semantics: "time for nearest unit to reach the blocked junction" —
-    # changes meaningfully per corridor and gives the diversion real context.
-    if ps_markers:
-        ps0 = ps_markers[0]
-        r_orig_lat, r_orig_lon = ps0["lat"], ps0["lon"]
-    else:
-        r_orig_lat, r_orig_lon = round(clat - 0.027, 6), clon
-    route_data   = get_route_data(token, r_orig_lat, r_orig_lon, clat, clon)
+    # Commuter through-route: a vehicle travelling along the corridor and
+    # passing through the blocked junction. Primary (red) = direct path through
+    # the incident; alternate (green) = diversion that goes around it.
+    route_data   = get_route_data(token, round(clat - 0.027, 6), clon,
+                                  round(clat + 0.027, 6), clon)
     route_coords = build_route_coords(route_data, clat, clon)
     route_stats  = extract_route_stats(route_data, route_coords)
 
@@ -1175,18 +1385,18 @@ else:
 
         # Action checklist
         actions = {
-            "HIGH":   ["☎️ Alert duty officer immediately",
-                       "🚧 Deploy barricades at junction",
-                       "📢 Activate BMTC rerouting",
-                       "📡 Broadcast advisory on VMS boards",
-                       "🚨 Request additional units from HQ"],
-            "MEDIUM": ["📋 Notify police station in-charge",
-                       "🚧 Pre-position barricades",
-                       "📍 Activate spot monitoring",
-                       "📢 Issue precautionary advisory"],
-            "LOW":    ["📋 Log event for monitoring",
-                       "👁️ Assign routine patrol",
-                       "📊 Track for pattern analysis"],
+            "HIGH":   ["Alert duty officer immediately",
+                       "Deploy barricades at junction",
+                       "Activate BMTC rerouting",
+                       "Broadcast advisory on VMS boards",
+                       "Request additional units from HQ"],
+            "MEDIUM": ["Notify police station in-charge",
+                       "Pre-position barricades",
+                       "Activate spot monitoring",
+                       "Issue precautionary advisory"],
+            "LOW":    ["Log event for monitoring",
+                       "Assign routine patrol",
+                       "Track for pattern analysis"],
         }
         st.markdown(f"""
         <div class="travis-card">
@@ -1197,7 +1407,7 @@ else:
 
     with col_map:
         st.markdown(
-            '<div class="section-title">📍 Impact Map — Bangalore &nbsp;·&nbsp; '
+            '<div class="section-title">Impact Map — Bangalore &nbsp;·&nbsp; '
             '<span style="color:#6c63ff;">Powered by Mappls</span></div>',
             unsafe_allow_html=True,
         )
@@ -1214,60 +1424,71 @@ else:
         )
         components.html(map_html, height=440, scrolling=False)
 
-        # ── ETA / Diversion comparison card (Integration 2 — Route API) ──
+        # ── Commuter Diversion Advisory (Integration 2 — Route API) ──
+        # Tells any vehicle approaching the corridor whether to divert.
+        #   Red  = staying on the blocked road (free-flow time inflated by the
+        #          predicted congestion severity).
+        #   Green= the diversion that goes around the incident (free-flowing).
         rs = route_stats
         if rs["divert_min"] > 0:
-            # Operational verdict
-            if rs["delta_min"] <= 5:
-                verdict_color, verdict_icon, verdict_text = (
-                    "#00d4aa", "✅", "Minimal overhead — viable rerouting")
-            elif rs["delta_min"] <= 15:
-                verdict_color, verdict_icon, verdict_text = (
-                    "#ffd166", "⚠️", "Moderate detour — advise early diversion")
-            else:
-                verdict_color, verdict_icon, verdict_text = (
-                    "#ff6b6b", "🚨", "Major detour — coordinate BMTC & VMS boards")
+            # Congestion multiplier driven by the model's impact score:
+            # impact 0 -> 1.0x (free flow), impact 100 -> 4.0x (gridlock).
+            cong_mult   = 1.0 + (res["impact"] / 100.0) * 3.0
+            blocked_min = max(rs["primary_min"] + 1,
+                              round(rs["primary_min"] * cong_mult))
+            blocked_km  = rs["primary_km"]
+            divert_min  = rs["divert_min"]
+            divert_km   = rs["divert_km"]
+            saved_min   = blocked_min - divert_min   # minutes saved by diverting
 
-            ps_origin_name = ps_markers[0]["name"] if ps_markers else "nearest PS"
+            # Recommendation verdict (commuter-facing).
+            if saved_min >= 10:
+                verdict_color, verdict_text = (
+                    "#00d4aa", f"DIVERT NOW — save ~{saved_min} min")
+            elif saved_min >= 3:
+                verdict_color, verdict_text = (
+                    "#ffd166", f"Diversion advised — save ~{saved_min} min")
+            elif saved_min > 0:
+                verdict_color, verdict_text = (
+                    "#ffd166", f"Marginal — diversion saves ~{saved_min} min")
+            else:
+                verdict_color, verdict_text = (
+                    "#8b8fa8", "Blocked road still faster — hold route")
+
             src_note = (
-                f'<span style="color:#555;font-size:10px;">'
-                f'{ps_origin_name} → incident · Mappls API</span>'
+                '<span style="color:#555;font-size:10px;">live · Mappls Routing API</span>'
                 if rs["source"] == "api" else
-                f'<span style="color:#555;font-size:10px;">'
-                f'{ps_origin_name} → incident · estimated</span>'
+                '<span style="color:#555;font-size:10px;">estimated from route geometry</span>'
             )
-            delta_str = (
-                f'+{rs["delta_min"]} min · +{rs["delta_km"]} km'
-                if rs["delta_km"] > 0
-                else f'+{rs["delta_min"]} min'
-            )
+            km_extra = round(max(0.0, divert_km - blocked_km), 1)
+            extra_str = (f' · +{km_extra} km longer' if km_extra > 0
+                         else ' · same distance')
 
             _eta_html = (
                 f'<div class="travis-card" style="border-color:{tc}33;margin-top:0;padding:16px 20px;">'
-                f'<div class="section-title">🚔 Police Response — ETA to Incident</div>'
+                f'<div class="section-title">Commuter Advisory — Divert or Stay?</div>'
                 f'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">'
                 f'<div style="background:#0f1117;border:1px solid #ff444440;border-radius:8px;padding:11px 14px;">'
-                f'<div style="font-size:9px;color:#ff4444;letter-spacing:0.07em;margin-bottom:3px;">DIRECT ROUTE (BLOCKED)</div>'
+                f'<div style="font-size:9px;color:#ff4444;letter-spacing:0.07em;margin-bottom:3px;">VIA BLOCKED ROAD (NOW)</div>'
                 f'<div style="display:flex;align-items:baseline;gap:4px;">'
-                f'<span style="font-size:26px;font-weight:800;color:#ff4444;line-height:1;">{rs["primary_min"]}</span>'
+                f'<span style="font-size:26px;font-weight:800;color:#ff4444;line-height:1;">{blocked_min}</span>'
                 f'<span style="font-size:12px;color:#8b8fa8;"> min</span>'
                 f'</div>'
-                f'<div style="font-size:11px;color:#8b8fa8;margin-top:2px;">{rs["primary_km"]} km</div>'
+                f'<div style="font-size:11px;color:#8b8fa8;margin-top:2px;">{blocked_km} km · ~{rs["primary_min"]} min if clear</div>'
                 f'</div>'
                 f'<div style="background:#0f1117;border:1px solid #00d4aa40;border-radius:8px;padding:11px 14px;">'
                 f'<div style="font-size:9px;color:#00d4aa;letter-spacing:0.07em;margin-bottom:3px;">VIA DIVERSION</div>'
                 f'<div style="display:flex;align-items:baseline;gap:4px;">'
-                f'<span style="font-size:26px;font-weight:800;color:#00d4aa;line-height:1;">{rs["divert_min"]}</span>'
+                f'<span style="font-size:26px;font-weight:800;color:#00d4aa;line-height:1;">{divert_min}</span>'
                 f'<span style="font-size:12px;color:#8b8fa8;"> min</span>'
                 f'</div>'
-                f'<div style="font-size:11px;color:#8b8fa8;margin-top:2px;">{rs["divert_km"]} km</div>'
+                f'<div style="font-size:11px;color:#8b8fa8;margin-top:2px;">{divert_km} km{extra_str}</div>'
                 f'</div>'
                 f'</div>'
                 f'<div style="background:#0f1117;border:1px solid {verdict_color}33;border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:10px;">'
-                f'<div style="font-size:20px;line-height:1;">{verdict_icon}</div>'
                 f'<div style="flex:1;">'
-                f'<div style="font-size:13px;font-weight:700;color:{verdict_color};">Detour: {delta_str}</div>'
-                f'<div style="font-size:11px;color:#8b8fa8;margin-top:2px;">{verdict_text}</div>'
+                f'<div style="font-size:14px;font-weight:800;color:{verdict_color};">{verdict_text}</div>'
+                f'<div style="font-size:11px;color:#8b8fa8;margin-top:2px;">Blocked road delay reflects {res["tier"]} predicted impact</div>'
                 f'</div>'
                 f'<div style="text-align:right;">{src_note}</div>'
                 f'</div>'
@@ -1279,32 +1500,134 @@ else:
         if cur_junction and "geocoded" in pin_source:
             st.markdown(
                 f'<div style="font-size:11px;color:#00d4aa;margin-top:2px;">'
-                f'📍 Pin at exact junction: <b>{cur_junction}</b> '
+                f'Pin at exact junction: <b>{cur_junction}</b> '
                 f'<span style="color:#555;">({clat:.4f}, {clon:.4f} · {pin_source})</span></div>',
                 unsafe_allow_html=True,
             )
         elif cur_junction:
             st.markdown(
                 f'<div style="font-size:11px;color:#ffd166;margin-top:2px;">'
-                f'📍 "{cur_junction}" could not be geocoded — pin at corridor centre</div>',
+                f'"{cur_junction}" could not be geocoded — pin at corridor centre</div>',
                 unsafe_allow_html=True,
             )
 
         if token:
             st.markdown(
                 '<div style="font-size:10px;color:#555;text-align:right;margin-top:2px;">'
-                '🗺️ Mappls SDK &nbsp;·&nbsp; 🚦 Live traffic layer'
-                ' &nbsp;·&nbsp; 🛣️ Route API &nbsp;·&nbsp; 📍 Lane-level Bangalore data'
+                'Mappls SDK &nbsp;·&nbsp; Live traffic layer'
+                ' &nbsp;·&nbsp; Route API &nbsp;·&nbsp; Lane-level Bangalore data'
                 '</div>',
                 unsafe_allow_html=True,
             )
+
+    # ── ROW 2.5: AI Natural-Language Advisory + Public Bulletin ─────────
+    st.markdown("---")
+    st.markdown('<div class="section-title">AI-Generated Advisory based on ML Model data and SHAP features mentioned here &nbsp;·&nbsp; '
+                ,
+                unsafe_allow_html=True)
+
+    # Assemble facts STRICTLY from model outputs, SHAP drivers, nearest stations.
+    rs = route_stats
+    _cong_mult   = 1.0 + (res["impact"] / 100.0) * 3.0
+    _blocked_min = max(rs["primary_min"] + 1, round(rs["primary_min"] * _cong_mult)) \
+        if rs.get("divert_min", 0) > 0 else None
+    _saved = (_blocked_min - rs["divert_min"]) if _blocked_min is not None else 0
+    if _blocked_min is None:
+        diversion_facts = {}
+    else:
+        if _saved >= 10:
+            _rec = f"Divert now — saves about {_saved} minutes."
+        elif _saved >= 3:
+            _rec = f"Diversion advised — saves about {_saved} minutes."
+        elif _saved > 0:
+            _rec = f"Diversion saves about {_saved} minutes."
+        else:
+            _rec = "Blocked road is still faster — hold current route."
+        diversion_facts = {
+            "blocked_min": _blocked_min, "blocked_km": rs["primary_km"],
+            "divert_min": rs["divert_min"], "divert_km": rs["divert_km"],
+            "minutes_saved_by_diverting": _saved, "recommendation": _rec,
+        }
+
+    advisory_facts = {
+        "corridor":              sel_corridor,
+        "junction":              sel_junction,
+        "cause":                 sel_cause.replace("_", " "),
+        "event_type":            sel_type,
+        "day":                   sel_dow,
+        "hour":                  sel_hour,
+        "risk_level":            res["tier"],
+        "impact_score":          res["impact"],
+        "p_closure_pct":         res["p_closure"],
+        "p_high_priority_pct":   res["p_priority"],
+        "expected_duration_hrs": res["pred_hrs"],
+        "constables":            res["constables"],
+        "barricades":            res["barricades"],
+        "response_min":          res["response_min"],
+        "nearest_stations":      [
+            {"name": ps["name"], "distance_km": ps["distance_km"]}
+            for ps in (nearest_ps or [])
+        ],
+        "top_risk_drivers":      shap_top_features(st.session_state.feat_vec, n=4),
+        "diversion":             diversion_facts,
+    }
+
+    # Deterministic 3-sentence fallback (used if Groq is unavailable).
+    _ns = advisory_facts["nearest_stations"]
+    _ns0 = (f"{_ns[0]['name']} PS ({_ns[0]['distance_km']} km)" if _ns else "the nearest station")
+    _jtxt = f" near {sel_junction}" if sel_junction else ""
+    _dtxt = ""
+    if diversion_facts:
+        _dtxt = (f" Expect about {diversion_facts['blocked_min']} min via the blocked stretch "
+                 f"versus {diversion_facts['divert_min']} min on the diversion.")
+    fallback_advisory = (
+        f"{res['tier']} road-closure risk on {sel_corridor}{_jtxt} due to a "
+        f"{sel_type} {sel_cause.replace('_',' ')} around {sel_hour}:00 on {sel_dow} "
+        f"(closure probability {res['p_closure']}%). Deploy {res['constables']} constables and "
+        f"{res['barricades']} barricade points from {_ns0}, targeting a "
+        f"{res['response_min']}-minute response.{_dtxt}"
+    )
+
+    _groq_text    = generate_advisory(json.dumps(advisory_facts))
+    advisory_text = _groq_text or fallback_advisory
+    _src_tag = ("Generated by Groq llama-3.3-70b from model data" if _groq_text else
+                "Groq unavailable — deterministic template from model data")
+
+    col_adv, col_btn = st.columns([2.2, 1])
+    with col_adv:
+        st.markdown(
+            f'<div class="travis-card" style="border-color:{tc}44;">'
+            f'<div style="font-size:15px;line-height:1.7;color:#e8eaf0;">{advisory_text}</div>'
+            f'<div style="font-size:10px;color:#555;margin-top:10px;">{_src_tag} · '
+            f'no information outside the ML model output is used</div>'
+            f'</div>',
+            unsafe_allow_html=True,
+        )
+    with col_btn:
+        # Build the citizen-facing printable bulletin (with optional map snapshot).
+        bulletin_facts = dict(advisory_facts)
+        bulletin_facts["map_data_uri"] = get_static_map_uri(token, round(clat, 6), round(clon, 6))
+        bulletin_html = build_bulletin_html(bulletin_facts, advisory_text)
+        _safe_corr = "".join(c if c.isalnum() else "_" for c in sel_corridor)
+        st.markdown('<div style="font-size:12px;color:#8b8fa8;margin-bottom:6px;">'
+                    'Public bulletin — share online for commuters</div>',
+                    unsafe_allow_html=True)
+        st.download_button(
+            "⬇  Generate Traffic Advisory",
+            data=bulletin_html,
+            file_name=f"TRAVIS_Advisory_{_safe_corr}.html",
+            mime="text/html",
+            width="stretch",
+            type="primary",
+        )
+        st.caption("Opens in any browser · Ctrl/Cmd-P → Save as PDF to print.")
 
     # ── ROW 3: SHAP Explanation ────────────────────────────────────────
     st.markdown("---")
     col_shap, col_hist = st.columns([1.2, 1])
 
     with col_shap:
-        st.markdown('<div class="section-title">🧠 Why this prediction? (SHAP Explanation)</div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-title">Why this prediction? (SHAP Explanation)</div>', unsafe_allow_html=True)
 
         X = st.session_state.feat_vec
         sv, base = get_shap_values(X)
@@ -1353,7 +1676,7 @@ else:
             st.info("SHAP explanation unavailable — install shap library to enable.")
 
     with col_hist:
-        st.markdown('<div class="section-title">📊 Historical Baseline — This Cause</div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-title">Historical Baseline — This Cause</div>', unsafe_allow_html=True)
 
         c_lu_hist = LOOKUP["cause"].get(sel_cause, {})
         all_causes_clos = {k: v.get("cause_closure_rate_hist", 0)
@@ -1410,7 +1733,7 @@ else:
           <div class="section-title">Event Context</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;">
             <div style="color:#8b8fa8;">Cause</div>
-            <div style="color:#e8eaf0;font-weight:600;">{CAUSE_EMOJI.get(sel_cause,'')} {sel_cause.replace('_',' ').title()}</div>
+            <div style="color:#e8eaf0;font-weight:600;">{sel_cause.replace('_',' ').title()}</div>
             <div style="color:#8b8fa8;">Corridor</div>
             <div style="color:#e8eaf0;font-weight:600;">{sel_corridor}</div>
             <div style="color:#8b8fa8;">Day / Time</div>
@@ -1427,7 +1750,7 @@ else:
 st.markdown("---")
 st.markdown("""
 <div style="text-align:center;color:#555;font-size:11px;padding:12px 0;">
-  TRAVIS &nbsp;·&nbsp; Hackathon Prototype &nbsp;·&nbsp;
+  TRAVIS &nbsp;·&nbsp; Team BridgeSense &nbsp;·&nbsp; Hackathon Prototype &nbsp;·&nbsp;
   Models trained on Astram incident data Nov 2023–Apr 2024 &nbsp;·&nbsp;
   Recommendations are advisory — operator override applies
 </div>
